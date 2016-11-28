@@ -2,7 +2,7 @@
 public class tes {
 
 	public static void main(String[] args) {
-		System.out.println("hellO");
+		System.out.println("helaaaalO");
 
 	}
 
