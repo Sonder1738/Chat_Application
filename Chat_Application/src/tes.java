@@ -44,7 +44,7 @@ public class tes {
 	private JTextField textField;
 
 	/**
-	 * Launch the applicatioasdasdsss.
+	 * Launch the applicatioaaaaaaaaaaaaaadsss.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
