@@ -1,3 +1,6 @@
+package src;
+
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -41,7 +44,7 @@ import java.awt.Color;
 public class tes{
 
 	
-	
+	//updated 
 	public tes() {
 		initialize();
 		
