@@ -41,7 +41,8 @@ import java.awt.Color;
 public class tes{
 
 	
-	//updated 
+	//updated on my desktop
+	
 	public tes() {
 		initialize();
 		
