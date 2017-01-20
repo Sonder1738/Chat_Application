@@ -44,7 +44,11 @@ public class tes {
 	private JTextField textField;
 
 	/**
+<<<<<<< HEAD
 	 * Launch the applicatiiiilolooooon.
+=======
+	 * Launch the applicatioaaaaaalastaaaaaadsss.
+>>>>>>> branch 'master' of ssh://git@github.com/Sonder1738/Chat_Application.git
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
