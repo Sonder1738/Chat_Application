@@ -38,17 +38,22 @@ import javax.swing.Box;
 import java.awt.Color;
 
 
-public class tes {
+public class tes{
 
+	
+	
+	public tes() {
+		initialize();
+		
+	}
+	
 	private JFrame frame;
 	private JTextField textField;
 
 	/**
 <<<<<<< HEAD
 	 * Launch the applicatiiiilolooooon.
-=======
-	 * Launch the applicatioaaaaaalastaaaaaadsss.
->>>>>>> branch 'master' of ssh://git@github.com/Sonder1738/Chat_Application.git
+
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -66,10 +71,7 @@ public class tes {
 	/**
 	 * Create the application.
 	 */
-	public tes() {
-		initialize();
-		
-	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
