@@ -43,7 +43,7 @@ import java.awt.Color;
 public class tes{
 
 	
-	//updated on my laptop
+	//updated on my laptoop
 	
 	
 	public tes() {
