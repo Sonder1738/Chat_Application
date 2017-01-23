@@ -21,6 +21,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeListener;
+import java.util.LinkedList;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -47,6 +48,8 @@ import javax.swing.UIManager;
 
 public class primary{
 
+	LinkedList<clients> clients= new LinkedList();
+	Serialize serial = new Serialize();
 	
 	JFrame frame;
 	JTextField id = new JTextField(10);
@@ -59,6 +62,24 @@ public class primary{
 	
 	
 	public primary(){
+		
+		LinkedList<clients> tempList = new LinkedList();
+    	tempList =serial.deserialize("src/clientss.ser");
+    	
+    	if(tempList==null){
+			//isNull=true; //use this or delete
+			JOptionPane.showMessageDialog(null, "Welcome to the Condominium management system!");
+			//do nothing
+			}else{
+			
+				clients=tempList;
+		//do nothing
+		//isNull=false; //use this or delete
+		}
+    	
+    	
+    	clients=tempList;
+		
 		
 		JOptionPane.showMessageDialog(null, "Welcome to the Chat Client!"); //optional name
 		
@@ -93,9 +114,9 @@ public class primary{
 			
 			gbc.insets = new Insets(3,3,3,3);
 			
-			add(new JLabel("ID: "),gbc);
+			add(new JLabel("ID: "),gbc); //initializes it here?
 			gbc.gridy+=1;
-			add(new JLabel("Password: "),gbc);
+			add(new JLabel("Password: "),gbc); //initializes it here?
 			gbc.gridy=0;
 			gbc.gridx+=1;
 			gbc.fill =GridBagConstraints.HORIZONTAL;
@@ -119,6 +140,7 @@ public class primary{
 	public class loginev implements ActionListener{
 
 		home homeFrame = new home();
+		register registerFrame = new register();
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -138,7 +160,7 @@ public class primary{
 			}
 			if(e.getSource()==newuser){
 				frame.dispose();
-				System.out.println("New user frame here");
+				registerFrame.start();
 			}
 		}
 		
