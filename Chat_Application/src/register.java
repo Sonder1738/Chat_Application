@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,6 +19,7 @@ public class register {
 	private JPasswordField pwf = new JPasswordField(10);
 	
 	public LinkedList<clients> clients = new LinkedList();
+	Serialize serial = new Serialize();
 	
 	public class registerPane extends JPanel{
 		public registerPane(){
@@ -72,7 +74,12 @@ public class register {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource()==reg){
-				System.out.println("Register something");
+				String enteredId = idf.getText();
+				String enteredPw = pwf.getText();
+				
+				clients.add(new clients(enteredId,enteredPw));
+				serial.serialize(clients, "clients.ser");
+				System.out.println(enteredPw+" "+ enteredId);
 			}
 		}
 		
