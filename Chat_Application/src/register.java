@@ -71,10 +71,8 @@ public class register {
 	public void start() {
 		LinkedList<clients> tempList = new LinkedList();
     	tempList =serial.deserialize("src/clients.ser");
-    	System.out.println("DOS IT RUN");
     	if(tempList==null){
-    		System.out.println("DOS 22222IT RUN");
-			serial.serialize(clients, "src/clients.ser");
+    		serial.serialize(clients, "src/clients.ser");
 			tempList = serial.deserialize("src/clients.ser");
 			System.out.println("decereal");
 			clients=tempList;
