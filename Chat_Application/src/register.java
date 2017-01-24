@@ -4,7 +4,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 
@@ -17,6 +23,8 @@ public class register {
 	private JLabel pw = new JLabel("Password :");
 	private JTextField idf = new JTextField(10);
 	private JPasswordField pwf = new JPasswordField(10);
+	boolean idValid = false;
+	boolean passValid = false;
 	
 	public LinkedList<clients> clients = new LinkedList();
 	Serialize serial = new Serialize();
@@ -24,9 +32,17 @@ public class register {
 	public class registerPane extends JPanel{
 		public registerPane(){
 			registerEv re = new registerEv();
+			mouseEv me = new mouseEv();
+			keyEv ke = new keyEv();
+			
 			reg.addActionListener(re);
 			idf.addActionListener(re);
 			pwf.addActionListener(re);
+			idf.addMouseListener(me);
+			idf.addKeyListener(ke);
+			pwf.addMouseListener(me);
+			pwf.addKeyListener(ke);
+			reg.setEnabled(false);
 			
 			setLayout(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
@@ -98,10 +114,94 @@ public class register {
 					    "Guy Registered");
 				primary primaryFrame = new primary();
 				frame.dispose();
-				
-				////ENDED HERE REMEMBER TO DESERIALIZE
 			}
+		}
+	}
+	public class mouseEv implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			if(e.getSource()==idf){
+				if(idf.getText().length()<5){
+					idf.setToolTipText("Please enter a username of minimum 5 characters");
+				}else{ //SETS THE TOOLTIP IF INVALID LENGTH
+					idf.setToolTipText(null);
+					idValid=true;
+				}
+			}
+			if(e.getSource()==pwf){
+				if(pwf.getText().length()<5 || !alphaNumeric(pwf.getText())){
+					pwf.setToolTipText("Please enter an alpha numerical password");
+				}else{
+					pwf.setToolTipText(null);
+					passValid=true;
+				}
+			}
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if(e.getSource()==idf){
+				if(idf.getText().length()<5 && idValid==false){
+					idf.setText("");
+				}
+			}
+			
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}
+	
+	public class keyEv implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			if(idf.getText().length()<5){
+				idValid =false;
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+	}
+	
+	public boolean alphaNumeric(String p){
+		 	String a = ".*[0-9].*";
+		 	String b = ".*[a-zA-Z].*";
+		 	return p.matches(b) && p.matches(a); //only returns true if string matches both ie.alphanumerical
+		
+	}
+	
+	
+	
 }
