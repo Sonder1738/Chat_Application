@@ -58,18 +58,17 @@ public class primary{
 	JButton login = new JButton("Login");
 	JButton newuser = new JButton("New User? Click here to register");
 	public static void main(String[] args) {
-		new primary();
+		start();
 	}
 	
 	
 	public primary(){
-		
 		LinkedList<clients> tempList = new LinkedList();
-    	tempList =serial.deserialize("src/clientss.ser");
+    	tempList =serial.deserialize("src/clients.ser");
     	
     	if(tempList==null){
 			//isNull=true; //use this or delete
-			JOptionPane.showMessageDialog(null, "Welcome to the Condominium management system!");
+    		JOptionPane.showMessageDialog(null, "Welcome to the Chat Client!");
 			//do nothing
 			}else{
 			
@@ -81,8 +80,7 @@ public class primary{
     	
     	clients=tempList;
 		
-		
-		JOptionPane.showMessageDialog(null, "Welcome to the Chat Client!"); //optional name
+		printeverything();
 		
 		frame = new JFrame("DERICK CHU FYP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,29 +140,54 @@ public class primary{
 
 		home homeFrame = new home();
 		register registerFrame = new register();
+		boolean notLoggedIn;
 		
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource()==login){
-				if(id.getText().equalsIgnoreCase("1") && pass.getText().equalsIgnoreCase("1")){
-					JOptionPane.showMessageDialog(null, "Logged in!","Success!",JOptionPane.INFORMATION_MESSAGE);
-    				frame.dispose();
-    				homeFrame.start();
-				}else{
-					
-					JOptionPane.showMessageDialog(frame,
-					    "Wrong ID or Password",
-					    "Warning!",
-					    JOptionPane.WARNING_MESSAGE);
-				}
+				for(int i=0;i<clients.size();i++){
+					if(id.getText().equalsIgnoreCase(clients.get(i).getId()) && pass.getText().equalsIgnoreCase(clients.get(i).getPassword())){
+						JOptionPane.showMessageDialog(null, "Logged in!","Success!",JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
+	    				homeFrame.start();
+	    				notLoggedIn=false;
+	    				break;
+					}else{
+						notLoggedIn=true;
+					}
 				
 			}
+				
+				
+    				if(notLoggedIn){
+    					JOptionPane.showMessageDialog(frame,
+    						    "Wrong ID or Password",
+    						    "Warning!",
+    						    JOptionPane.WARNING_MESSAGE);
+    							}
+						}else{
+					//do nothing
+					
+					}
+				
+			
 			if(e.getSource()==newuser){
 				frame.dispose();
 				registerFrame.start();
 			}
 		}
 		
+	}
+	public void printeverything(){
+		for(int i=0;i<clients.size();i++){
+			System.out.println("ID :"+clients.get(i).getId());
+			System.out.println("PW :"+clients.get(i).getPassword());
+		}
+	}
+
+
+	public static void start() {
+		new primary();
 	}
 }
 

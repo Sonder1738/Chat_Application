@@ -53,13 +53,27 @@ public class register {
 	
 	
 	public void start() {
-		initialize();
-		LinkedList<clients> templist = new LinkedList();
+		LinkedList<clients> tempList = new LinkedList();
+    	tempList =serial.deserialize("src/clients.ser");
+    	
+    	if(tempList==null){
+			//isNull=true; //use this or delete
+			//JOptionPane.showMessageDialog(null, "Welcome to the Condominium management system!");
+			//do nothing
+			}else{
+			
+				clients=tempList;
+		//do nothing
+		//isNull=false; //use this or delete
+		}
+    	
+    	
+    	clients=tempList;
+    	initialize();
 		//from here
 	}
 
 	private void initialize() {
-
 		frame = new JFrame("DERICK CHU FYP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -78,8 +92,14 @@ public class register {
 				String enteredPw = pwf.getText();
 				
 				clients.add(new clients(enteredId,enteredPw));
-				serial.serialize(clients, "clients.ser");
-				System.out.println(enteredPw+" "+ enteredId);
+				serial.serialize(clients, "src/clients.ser");
+				
+				JOptionPane.showMessageDialog(null,
+					    "Guy Registered");
+				primary primaryFrame = new primary();
+				frame.dispose();
+				
+				////ENDED HERE REMEMBER TO DESERIALIZE
 			}
 		}
 		
