@@ -69,6 +69,8 @@ public class primary{
     	if(tempList==null){
 			//isNull=true; //use this or delete
     		JOptionPane.showMessageDialog(null, "Welcome to the Chat Client!");
+    		JOptionPane.showMessageDialog(null, "Please Register For first time use!");
+    		login.setEnabled(false);
 			//do nothing
 			}else{
 			
@@ -80,7 +82,7 @@ public class primary{
     	
     	clients=tempList;
 		
-		printeverything();
+		//printeverything();
 		
 		frame = new JFrame("DERICK CHU FYP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,6 +147,7 @@ public class primary{
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource()==login){
+				
 				for(int i=0;i<clients.size();i++){
 					if(id.getText().equalsIgnoreCase(clients.get(i).getId()) && pass.getText().equalsIgnoreCase(clients.get(i).getPassword())){
 						JOptionPane.showMessageDialog(null, "Logged in!","Success!",JOptionPane.INFORMATION_MESSAGE);

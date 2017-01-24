@@ -71,11 +71,13 @@ public class register {
 	public void start() {
 		LinkedList<clients> tempList = new LinkedList();
     	tempList =serial.deserialize("src/clients.ser");
-    	
+    	System.out.println("DOS IT RUN");
     	if(tempList==null){
-			//isNull=true; //use this or delete
-			//JOptionPane.showMessageDialog(null, "Welcome to the Condominium management system!");
-			//do nothing
+    		System.out.println("DOS 22222IT RUN");
+			serial.serialize(clients, "src/clients.ser");
+			tempList = serial.deserialize("src/clients.ser");
+			System.out.println("decereal");
+			clients=tempList;
 			}else{
 			
 				clients=tempList;
@@ -174,21 +176,31 @@ public class register {
 	public class keyEv implements KeyListener{
 
 		@Override
-		public void keyPressed(KeyEvent arg0) {
-			if(idf.getText().length()<5){
-				idValid =false;
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
+		public void keyPressed(KeyEvent e) {
+			
 			
 		}
 
 		@Override
+		public void keyReleased(KeyEvent e) {
+			if(e.getSource()==pwf){
+				if(pwf.getText().length()<5 || !alphaNumeric(pwf.getText()) || idf.getText().length()<5){
+					reg.setEnabled(false);
+				}else{
+					reg.setEnabled(true);
+				}
+			}
+			if(e.getSource()==idf){
+				if(idf.getText().length()<5 || pwf.getText().length()<5 || !alphaNumeric(pwf.getText())){
+					reg.setEnabled(false);
+				}else{
+					reg.setEnabled(true);
+				}
+			}
+		}
+
+		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 
