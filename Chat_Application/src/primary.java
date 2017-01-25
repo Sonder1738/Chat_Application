@@ -152,7 +152,7 @@ public class primary{
 					if(id.getText().equalsIgnoreCase(clients.get(i).getId()) && pass.getText().equalsIgnoreCase(clients.get(i).getPassword())){
 						JOptionPane.showMessageDialog(null, "Logged in!","Success!",JOptionPane.INFORMATION_MESSAGE);
 						frame.dispose();
-	    				homeFrame.start();
+	    				homeFrame.start(i);
 	    				notLoggedIn=false;
 	    				break;
 					}else{
@@ -181,7 +181,7 @@ public class primary{
 		}
 		
 	}
-	public void printeverything(){
+	public void printeverything(){//just to test if list has sthuf
 		for(int i=0;i<clients.size();i++){
 			System.out.println("ID :"+clients.get(i).getId());
 			System.out.println("PW :"+clients.get(i).getPassword());

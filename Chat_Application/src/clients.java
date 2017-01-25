@@ -5,6 +5,7 @@ public class clients implements Serializable{
 
 	private String id;
 	private String password;
+	private int index;
 	
 	public clients(String id, String password){
 		//register shit here
@@ -27,6 +28,14 @@ public class clients implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 	
 	
