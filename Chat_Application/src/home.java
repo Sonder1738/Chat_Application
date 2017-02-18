@@ -25,6 +25,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
 
 public class home{
 
@@ -33,6 +34,7 @@ public class home{
 	private JFrame frame;
 	int index;
 	private JTextField textField;
+	private JTextField textField_1;
 	/**
 	 * @wbp.parser.entryPoint
 	 */
@@ -54,11 +56,39 @@ public class home{
         
         JPanel panel = new JPanel();
         frame.getContentPane().add(panel, BorderLayout.CENTER);
-        panel.setLayout(new MigLayout("", "[][][][][][][grow]", "[][][][][][][][][][][][][][][][][][][]"));
+        GridBagLayout gbl_panel = new GridBagLayout();
+        gbl_panel.columnWidths = new int[]{4, 608, 483, 0, 40, 52, 172, 237, -66, 0};
+        gbl_panel.rowHeights = new int[]{31, 180, 382, 76, 20, 0};
+        gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        panel.setLayout(gbl_panel);
+        
+        textField_1 = new JTextField();
+        GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+        gbc_textField_1.gridwidth = 2;
+        gbc_textField_1.fill = GridBagConstraints.BOTH;
+        gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+        gbc_textField_1.gridx = 2;
+        gbc_textField_1.gridy = 2;
+        panel.add(textField_1, gbc_textField_1);
+        textField_1.setColumns(10);
         
         textField = new JTextField();
-        panel.add(textField, "cell 1 9,grow");
+        GridBagConstraints gbc_textField = new GridBagConstraints();
+        gbc_textField.fill = GridBagConstraints.BOTH;
+        gbc_textField.insets = new Insets(0, 0, 5, 5);
+        gbc_textField.gridx = 2;
+        gbc_textField.gridy = 3;
+        panel.add(textField, gbc_textField);
         textField.setColumns(10);
+        
+        JButton btnNewButton = new JButton("New button");
+        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+        gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+        gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
+        gbc_btnNewButton.gridx = 3;
+        gbc_btnNewButton.gridy = 3;
+        panel.add(btnNewButton, gbc_btnNewButton);
         
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
