@@ -39,6 +39,18 @@ public class home{
 	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
+		/*
+		 * 
+		 * 
+		 * Server s = new Server();
+		s.start();
+		Thread.sleep(5000);
+		Client c = new Client();
+		c.start();
+		 */
+		Server s = new Server(); //starts server when logged in?
+		s.start();
+		
 		
 		Serialize serial = new Serialize();
 		LinkedList<clients> clients= new LinkedList();
@@ -57,10 +69,10 @@ public class home{
         JPanel panel = new JPanel();
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[]{4, 608, 483, 0, 40, 52, 172, 237, -66, 0};
-        gbl_panel.rowHeights = new int[]{31, 180, 382, 76, 20, 0};
+        gbl_panel.columnWidths = new int[]{4, 628, 483, 0, 40, 52, 172, 237, -66, 0};
+        gbl_panel.rowHeights = new int[]{31, 180, 382, 76, 0, 20, 0};
         gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_panel);
         
         textField_1 = new JTextField();
@@ -89,6 +101,19 @@ public class home{
         gbc_btnNewButton.gridx = 3;
         gbc_btnNewButton.gridy = 3;
         panel.add(btnNewButton, gbc_btnNewButton);
+        
+        JButton btnNewButton_1 = new JButton("Connect");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		Client c = new Client();
+        		c.start();
+        	}
+        });
+        GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+        gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
+        gbc_btnNewButton_1.gridx = 3;
+        gbc_btnNewButton_1.gridy = 4;
+        panel.add(btnNewButton_1, gbc_btnNewButton_1);
         
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
