@@ -48,8 +48,18 @@ public class home{
 		Client c = new Client();
 		c.start();
 		 */
-		Server s = new Server(); //starts server when logged in?
-		s.start();
+		//Server s = new Server(); //starts server when logged in? or when want to chat??
+		//s.start();
+		
+		multicast mc = new multicast();
+		mc.start();
+		handshake hs = new handshake();
+		try {
+			hs.shake();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		Serialize serial = new Serialize();
@@ -88,6 +98,8 @@ public class home{
         textField = new JTextField();
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.fill = GridBagConstraints.BOTH;
+        textField.setHorizontalAlignment(JTextField.LEFT);
+
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.gridx = 2;
         gbc_textField.gridy = 3;

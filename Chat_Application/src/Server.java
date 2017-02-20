@@ -67,7 +67,7 @@ public class Server implements Runnable{
 		
 		}
 	
-public void start() {
+public void start() { //doesnt get called??
 		
 		System.out.println("Starting Server Thread");
 	      if (t == null) {
