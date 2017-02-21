@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -6,14 +7,43 @@ import java.net.SocketException;
 public class handshake {
 
 	public void shake() throws Exception {
-		DatagramSocket ds = new DatagramSocket();  
-	    String str = "nooooo";  
-	    InetAddress ip = InetAddress.getByName("127.0.0.1");  
-	    int a = 10;
-	    DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ip, 3000);  
-	    
-	    ds.send(dp);  
-	    ds.close();
+		final  String INET_ADDR = "224.0.0.3";
+		
+		    final int PORT = 8888;
+		
+		 
+		        // Get the address that we are going to connect to.
+		
+		        InetAddress addr = InetAddress.getByName(INET_ADDR);
+		
+		      
+		
+		        // Open a new DatagramSocket, which will be used to send the data.
+		
+		        try (DatagramSocket serverSocket = new DatagramSocket()) {
+		
+		            
+		
+		                String msg = "Sent message no ";
+		                // Create a packet that will contain the data
+		
+		                // (in the form of bytes) and send it.
+		
+		                DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(),msg.getBytes().length, addr, PORT);serverSocket.send(msgPacket);
+		
+		      
+		
+		                System.out.println("Server sent packet with msg: " + msg);
+		
+		                Thread.sleep(500);
+		
+		            
+		
+		        } catch (IOException ex) {
+		
+		            ex.printStackTrace();
+		        	}
+
 		
 	}
 

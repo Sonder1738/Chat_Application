@@ -53,13 +53,7 @@ public class home{
 		
 		multicast mc = new multicast();
 		mc.start();
-		handshake hs = new handshake();
-		try {
-			hs.shake();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		
 		Serialize serial = new Serialize();
@@ -117,8 +111,15 @@ public class home{
         JButton btnNewButton_1 = new JButton("Connect");
         btnNewButton_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		Client c = new Client();
-        		c.start();
+        		//Client c = new Client();
+        		//c.start();
+        		handshake hs = new handshake();
+        		try {
+        			hs.shake();
+        		} catch (Exception e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
         	}
         });
         GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();

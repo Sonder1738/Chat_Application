@@ -1,5 +1,9 @@
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 
 public class multicast implements Runnable{
 
@@ -7,29 +11,66 @@ public class multicast implements Runnable{
 
 	@Override
 	public void run() {
-		listener();
+		try {
+			listener();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private void listener() {
+	private void listener() throws UnknownHostException{
 		
-		try{
-			while(true){
-		DatagramSocket ds = new DatagramSocket(3000);  
-        byte[] buf = new byte[1024];  
-        DatagramPacket dp = new DatagramPacket(buf, 1024);  
-        ds.receive(dp);  
-        System.out.println(dp.getAddress());
-        String str = new String(dp.getData(), 0, dp.getLength());  
-        if(str.equals("hi")){
-        	System.out.println("HELLO");
-        }
-        System.out.println(str);  
-        ds.close();  
-			}
-    	
-	}catch(Exception e){
-		System.out.println(e); //fix issue with same bind?
-	}
+		final String INET_ADDR = "224.0.0.3";
+		
+		    final int PORT = 8888;
+		// Get the address that we are going to connect to.
+		
+		        InetAddress address = InetAddress.getByName(INET_ADDR);
+	// Create a buffer of bytes, which will be used to store
+		
+		        // the incoming bytes containing the information from the server.
+		
+		      // Since the message is small here, 256 bytes should be enough.
+		
+		        byte[] buf = new byte[256];
+		
+		         
+		
+		        // Create a new Multicast socket (that will allow other sockets/programs
+		
+		      // to join it as well.
+		
+		        try (MulticastSocket clientSocket = new MulticastSocket(PORT)){
+		
+		            //Joint the Multicast group.
+		
+		            clientSocket.joinGroup(address);
+		
+		      
+		
+		            while (true) {
+		
+		                // Receive the information and print it.
+		
+		                DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
+		
+		                clientSocket.receive(msgPacket);
+		
+		 
+		
+		                String msg = new String(buf, 0, buf.length);
+		
+		                System.out.println("Socket 1 received msg: " + msg);
+		
+		            }
+		
+		        } catch (IOException ex) {
+		
+		            ex.printStackTrace();
+		 }
+		
+		
 	}
 	
 	public void start() {
