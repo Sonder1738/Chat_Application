@@ -28,7 +28,7 @@ public class multicast implements Runnable{
 			}
     	
 	}catch(Exception e){
-		System.out.println("Something went wrong with listener");
+		System.out.println(e); //fix issue with same bind?
 	}
 	}
 	
