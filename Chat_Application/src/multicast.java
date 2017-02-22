@@ -21,17 +21,17 @@ public class multicast implements Runnable{
 
 	private void listener() throws UnknownHostException{
 		
-		final String INET_ADDR = "224.0.0.3";
+		final String INET_ADDR = "224.0.0.0";
 		
 		    final int PORT = 8888;
-		// Get the address that we are going to connect to.
+		    // Get the address that we are going to connect to.
 		
 		        InetAddress address = InetAddress.getByName(INET_ADDR);
-	// Create a buffer of bytes, which will be used to store
+		        // Create a buffer of bytes, which will be used to store
 		
 		        // the incoming bytes containing the information from the server.
 		
-		      // Since the message is small here, 256 bytes should be enough.
+		        // Since the message is small here, 256 bytes should be enough.
 		
 		        byte[] buf = new byte[256];
 		
@@ -39,36 +39,35 @@ public class multicast implements Runnable{
 		
 		        // Create a new Multicast socket (that will allow other sockets/programs
 		
-		      // to join it as well.
+		        // to join it as well.
 		
 		        try (MulticastSocket clientSocket = new MulticastSocket(PORT)){
 		
 		            //Joint the Multicast group.
 		
 		            clientSocket.joinGroup(address);
-		
-		      
-		
+		            
 		            while (true) {
 		
 		                // Receive the information and print it.
 		
 		                DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
-		
+		                
+		                InetAddress localip = InetAddress.getLocalHost();
 		                clientSocket.receive(msgPacket);
-		
-		 
-		
 		                String msg = new String(buf, 0, buf.length);
-		
-		                System.out.println("Socket 1 received msg: " + msg);
-		
-		            }
-		
-		        } catch (IOException ex) {
-		
-		            ex.printStackTrace();
-		 }
+		                
+		                
+		                if(msgPacket.getAddress().equals(localip)){
+		                	
+		                	System.out.println("This is conencted to itself");
+		                }else{
+		                	System.out.println("Socket 1 received msg from " + msg);
+		                	}
+		                }
+		        	}catch(IOException ex) {
+		        		ex.printStackTrace();
+		        		}
 		
 		
 	}

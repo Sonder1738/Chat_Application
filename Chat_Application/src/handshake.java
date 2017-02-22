@@ -7,9 +7,9 @@ import java.net.SocketException;
 public class handshake {
 
 	public void shake() throws Exception {
-		final  String INET_ADDR = "224.0.0.3";
 		
-		    final int PORT = 8888;
+			final  String INET_ADDR = "224.0.0.0";
+			final int PORT = 8888;
 		
 		 
 		        // Get the address that we are going to connect to.
@@ -23,23 +23,16 @@ public class handshake {
 		        try (DatagramSocket serverSocket = new DatagramSocket()) {
 		
 		            
-		
-		                String msg = "Sent message no ";
+		        		InetAddress ip = InetAddress.getLocalHost();
+		                String msg = "hi";
 		                // Create a packet that will contain the data
 		
 		                // (in the form of bytes) and send it.
 		
-		                DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(),msg.getBytes().length, addr, PORT);serverSocket.send(msgPacket);
-		
-		      
-		
-		                System.out.println("Server sent packet with msg: " + msg);
-		
+		                DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(),msg.getBytes().length, addr, PORT);
+		                serverSocket.send(msgPacket);
 		                Thread.sleep(500);
-		
-		            
-		
-		        } catch (IOException ex) {
+		        	} catch (IOException ex) {
 		
 		            ex.printStackTrace();
 		        	}

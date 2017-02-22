@@ -50,10 +50,13 @@ public class home{
 		 */
 		//Server s = new Server(); //starts server when logged in? or when want to chat??
 		//s.start();
-		
-		multicast mc = new multicast();
-		mc.start();
-		
+		handshake hs = new handshake();
+		try {
+			hs.shake();
+			}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		Serialize serial = new Serialize();
@@ -113,13 +116,7 @@ public class home{
         	public void actionPerformed(ActionEvent arg0) {
         		//Client c = new Client();
         		//c.start();
-        		handshake hs = new handshake();
-        		try {
-        			hs.shake();
-        		} catch (Exception e) {
-        			// TODO Auto-generated catch block
-        			e.printStackTrace();
-        		}
+        		
         	}
         });
         GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();

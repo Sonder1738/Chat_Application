@@ -63,6 +63,11 @@ public class primary{
 	
 	
 	public primary(){
+		//starts listener server first that listens for clients on the network??
+		multicast mc = new multicast();
+		mc.start();
+		System.out.println("Ready to listen for connected clients on the network");
+		
 		LinkedList<clients> tempList = new LinkedList();
     	tempList =serial.deserialize("src/clients.ser");
     	
