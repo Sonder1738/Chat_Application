@@ -62,7 +62,7 @@ public class multicast implements Runnable{
 		                	
 		                	System.out.println("This is conencted to itself");
 		                }else{
-		                	System.out.println("Socket 1 received msg from " + msg);
+		                	System.out.println(msgPacket.getAddress()+" Connected");
 		                	}
 		                }
 		        	}catch(IOException ex) {
@@ -81,3 +81,60 @@ public class multicast implements Runnable{
 	}
 
 }
+
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ USER ONLINE DYNAMIC TABLE @@@@@@@@@@@@@@@@@@@@@@@
+import java.awt.BorderLayout;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.util.Random;
+public class JListTest {
+
+    
+    public static void main(String args[]) throws InterruptedException {
+    	 // create object of table and table model
+    	 JTable tbl = new JTable();
+    	 DefaultTableModel dtm = new DefaultTableModel(0, 0);
+    	 JFrame frame;
+    	 frame = new JFrame("DERICK CHU FYP");
+         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         frame.setLayout(new BorderLayout());
+         frame.setSize(420, 320);
+         
+         frame.setLocationRelativeTo(null);
+         frame.setVisible(true);
+    	// add header of the table
+    	String header[] = new String[] {""};
+
+    	// add header in table model     
+    	 dtm.setColumnIdentifiers(header);
+    	  //set model into the table object
+    	       tbl.setModel(dtm);
+    	       frame.add(tbl);
+    	       
+    	     // add row dynamically into the table      
+    	      
+
+    	       Random rand = new Random();
+
+    	      
+    	       
+    	       	for(int i =0;i<50;i++){
+    	       	 int  n = rand.nextInt(2) + 1;
+    	       	 Thread.sleep(1000);
+    	       	 System.out.println(n);
+    	       		if(n==1){
+    	       			System.out.println("HERE"+n);
+    	       			dtm.addRow(new Object[] {"Data"});
+    	       			
+    	       		}
+    	       	}
+    	     
+    	        
+    	 
+    }
+}
+*/
