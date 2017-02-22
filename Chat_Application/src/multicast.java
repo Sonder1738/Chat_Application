@@ -63,6 +63,9 @@ public class multicast implements Runnable{
 		                	System.out.println("This is conencted to itself");
 		                }else{
 		                	System.out.println(msgPacket.getAddress()+" Connected");
+		                	//testing popup
+		                	home h = new home();
+		                	h.test(msgPacket.getAddress());
 		                	}
 		                }
 		        	}catch(IOException ex) {

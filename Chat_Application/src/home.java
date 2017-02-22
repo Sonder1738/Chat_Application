@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
@@ -11,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -26,6 +29,9 @@ import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
+import javax.swing.BoxLayout;
+import javax.swing.JTable;
+import java.awt.GridLayout;
 
 public class home{
 
@@ -33,8 +39,8 @@ public class home{
 	
 	private JFrame frame;
 	int index;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTable table;
+	private InetAddress bla;
 	/**
 	 * @wbp.parser.entryPoint
 	 */
@@ -71,47 +77,23 @@ public class home{
         frame.setSize(800, 600);
         frame.setContentPane(new homePane()); //is this even needed?
         frame.setLocationRelativeTo(null);
-        frame.getContentPane().setLayout(new BorderLayout(0, 0));
+        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        String header[] = new String[] {""};
+
+        //add header in table model     
+    	dtm.setColumnIdentifiers(header);
+    	//dtm.addRow(new Object[] {"ASDFGG-PC/ 192.168.1.1"}); add stuff here
+    	dtm.addRow(new Object[] {bla});
+        frame.getContentPane().setLayout(null);
         
         JPanel panel = new JPanel();
-        frame.getContentPane().add(panel, BorderLayout.CENTER);
-        GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[]{4, 628, 483, 0, 40, 52, 172, 237, -66, 0};
-        gbl_panel.rowHeights = new int[]{31, 180, 382, 76, 0, 20, 0};
-        gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        panel.setLayout(gbl_panel);
-        
-        textField_1 = new JTextField();
-        GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-        gbc_textField_1.gridwidth = 2;
-        gbc_textField_1.fill = GridBagConstraints.BOTH;
-        gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-        gbc_textField_1.gridx = 2;
-        gbc_textField_1.gridy = 2;
-        panel.add(textField_1, gbc_textField_1);
-        textField_1.setColumns(10);
-        
-        textField = new JTextField();
-        GridBagConstraints gbc_textField = new GridBagConstraints();
-        gbc_textField.fill = GridBagConstraints.BOTH;
-        textField.setHorizontalAlignment(JTextField.LEFT);
-
-        gbc_textField.insets = new Insets(0, 0, 5, 5);
-        gbc_textField.gridx = 2;
-        gbc_textField.gridy = 3;
-        panel.add(textField, gbc_textField);
-        textField.setColumns(10);
-        
-        JButton btnNewButton = new JButton("New button");
-        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-        gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-        gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
-        gbc_btnNewButton.gridx = 3;
-        gbc_btnNewButton.gridy = 3;
-        panel.add(btnNewButton, gbc_btnNewButton);
+        panel.setBounds(0, 0, 208, 541);
+        frame.getContentPane().add(panel);
+        panel.setLayout(null);
         
         JButton btnNewButton_1 = new JButton("Connect");
+        btnNewButton_1.setBounds(0, 518, 208, 23);
+        panel.add(btnNewButton_1);
         btnNewButton_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		//Client c = new Client();
@@ -119,11 +101,31 @@ public class home{
         		
         	}
         });
-        GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-        gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-        gbc_btnNewButton_1.gridx = 3;
-        gbc_btnNewButton_1.gridy = 4;
-        panel.add(btnNewButton_1, gbc_btnNewButton_1);
+        
+        JPanel panel_3 = new JPanel();
+        panel_3.setBounds(0, 24, 208, 494);
+        panel.add(panel_3);
+        panel_3.setLayout(new GridLayout(0, 1, 0, 0));
+        
+        table = new JTable();
+        //set model into the table object
+    	table.setModel(dtm);
+    	panel_3.add(table);
+        
+       
+        JPanel panel_1 = new JPanel();
+        panel_1.setBounds(0, 0, 208, 24);
+        panel.add(panel_1);
+        
+        JLabel lblConnectedUsers = new JLabel("Connected Users");
+        panel_1.add(lblConnectedUsers);
+        
+        JPanel panel_2 = new JPanel();
+        panel_2.setBounds(607, 0, 99, 541);
+        frame.getContentPane().add(panel_2);
+        
+        JButton btnNewButton = new JButton("New button");
+        panel_2.add(btnNewButton);
         
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
@@ -180,5 +182,9 @@ public class home{
 		this.index=index;
 		initialize();
 		
+	}
+	public void test(InetAddress address) {
+		// TODO Auto-generated method stub
+		this.bla=address;
 	}
 }
