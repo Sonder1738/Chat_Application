@@ -83,7 +83,12 @@ public class home{
         //add header in table model     
     	dtm.setColumnIdentifiers(header);
     	//dtm.addRow(new Object[] {"ASDFGG-PC/ 192.168.1.1"}); add stuff here
-    	dtm.addRow(new Object[] {bla});
+    	if(bla==null){
+    		//do nothing
+    	}else{
+    		dtm.addRow(new Object[] {bla});
+    	}
+    	
         frame.getContentPane().setLayout(null);
         
         JPanel panel = new JPanel();
