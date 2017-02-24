@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridBagLayout;
@@ -36,15 +37,22 @@ import java.awt.GridLayout;
 public class home{
 
 	
-	
+	DefaultTableModel dtm = new DefaultTableModel(0, 0);
 	private JFrame frame;
 	int index;
-	private JTable table;
+	public JTable table;
 	private InetAddress bla;
+	static LinkedList<InetAddress> ipList = null;
+	static LinkedList<InetAddress> oldList =null; //maybe make null
+	static LinkedList<InetAddress> templist;
+	static int i=0;
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	private void initialize() {
+	
+		void initialize() {
+		
+		
 		/*
 		 * 
 		 * 
@@ -65,29 +73,85 @@ public class home{
 		}
 		
 		
+
+	    
+	    
 		Serialize serial = new Serialize();
 		LinkedList<clients> clients= new LinkedList();
 		LinkedList templist = serial.deserialize("src/clients.ser");
 		clients = templist;
 		String b = clients.get(index).getId(); // CHANGE TO LOOP
-		System.out.println(b);
+		System.out.println(b); //prints user login id currently
 		
 		frame = new JFrame("DERICK CHU FYP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setContentPane(new homePane()); //is this even needed?
         frame.setLocationRelativeTo(null);
-        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        
         String header[] = new String[] {""};
 
         //add header in table model     
     	dtm.setColumnIdentifiers(header);
     	//dtm.addRow(new Object[] {"ASDFGG-PC/ 192.168.1.1"}); add stuff here
-    	if(bla==null){
-    		//do nothing
-    	}else{
-    		dtm.addRow(new Object[] {bla});
-    	}
+    	
+    	//table timer check periodically
+    	multicast asdf = new multicast();
+    	
+    	ActionListener actListner = new ActionListener() 
+	    {
+	        public void actionPerformed(ActionEvent event) 
+	        {
+	        	//RETAINS VALUE INTERESTING
+	        	//HOW TO CHECK FOR DUPLICATE
+	        	//MAYBE DONT NEED SINCE ONLY ONE CONNECTS?
+	        	//CHECK FOR DISCONNECT INSTEAD?
+	        	
+	        	//templist
+	        	ipList = getList();
+	        	
+	        	DefaultTableModel asd = new DefaultTableModel(0, 0);
+	        	String header[] = new String[] {""};
+	        	asd.setColumnIdentifiers(header);
+	        	if(ipList==null){
+	        	
+	        	}else{
+	        		for(int i =0;i<ipList.size();i++){
+		        		asd.addRow(new Object[] {ipList.get(i)});
+	        	}
+	        	}
+	        	table.setModel(asd);
+	        	
+	        	
+	        	
+	        	//ADD LOGIC NO DUPLICATES
+	        	
+	        	//if(asdf.getIpList()==null){
+	        		//System.out.println(ipList);
+	        		//ipList=asdf.getIpList();
+	        	//}else{
+	        		//System.out.println("ACTION"+ipList);
+	        	//}
+	        	
+	        	
+	        	/*
+	        	 * if(ipList==null){
+	        		System.out.println("NULL ONCE");
+	        		ipList =repaint(templist);
+	        		}else{
+	        		
+	                		
+	                	}
+	            	}
+	        	}
+	        	 */
+	        	
+	        }
+	    };
+    	
+	    Timer timer = new Timer(500, actListner);
+	    timer.start();
+    	
     	
         frame.getContentPane().setLayout(null);
         
@@ -130,6 +194,11 @@ public class home{
         frame.getContentPane().add(panel_2);
         
         JButton btnNewButton = new JButton("New button");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		dtm.addRow(new Object[] {"HI"});
+        	}
+        });
         panel_2.add(btnNewButton);
         
         JMenuBar menuBar = new JMenuBar();
@@ -188,8 +257,17 @@ public class home{
 		initialize();
 		
 	}
-	public void test(InetAddress address) {
+	public void setList(LinkedList<InetAddress> ipList2) {
 		// TODO Auto-generated method stub
-		this.bla=address;
+		templist = ipList2;
+		//System.out.println("HereDown"+templist2);
 	}
+	public LinkedList<InetAddress> getList(){
+		
+		//System.out.println("HereDownasdf"+ipList);
+		return templist;
+	}
+	
+	
+	
 }

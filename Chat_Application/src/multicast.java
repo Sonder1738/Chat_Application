@@ -4,11 +4,16 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 
 public class multicast implements Runnable{
 
 	private Thread t;
-
+	
+	
+	LinkedList<InetAddress> ipList = new LinkedList<InetAddress>();
+	LinkedList<InetAddress> tempList = new LinkedList<InetAddress>();
+	
 	@Override
 	public void run() {
 		try {
@@ -22,7 +27,7 @@ public class multicast implements Runnable{
 	private void listener() throws UnknownHostException{
 		
 		final String INET_ADDR = "224.0.0.0";
-		
+			final String farewell = "bye";
 		    final int PORT = 8888;
 		    // Get the address that we are going to connect to.
 		
@@ -55,18 +60,34 @@ public class multicast implements Runnable{
 		                
 		                InetAddress localip = InetAddress.getLocalHost();
 		                clientSocket.receive(msgPacket);
-		                String msg = new String(buf, 0, buf.length);
-		                
+		                //String msg = new String(buf, 0, buf.length); //gets the entire buffer length..so NOPE
+		                String msg = new String(msgPacket.getData(), msgPacket.getOffset(), msgPacket.getLength());
 		                
 		                if(msgPacket.getAddress().equals(localip)){
 		                	
 		                	System.out.println("This is conencted to itself");
+		                	
 		                }else{
+		                	if(msg.equals(farewell)){
+		                		System.out.println(msgPacket.getAddress()+" SEE YA");
+		                		try{
+		                			ipList.removeFirst(); //MAYBE MODIFY THIS TO REMOVE SPECIFIC IP DISCONNECTED
+		                		}catch(Exception e){
+		                			
+		                		}
+		                		
+		                		home h = new home();
+						        h.setList(ipList);
+		                	}else{
 		                	System.out.println(msgPacket.getAddress()+" Connected");
-		                	//testing popup
-		                	home h = new home();
-		                	h.test(msgPacket.getAddress());
-		                	}
+					        //testing popup
+					        ipList.add(msgPacket.getAddress());
+					        home h = new home();
+					        h.setList(ipList);
+				            }
+		                }
+		                
+		               
 		                }
 		        	}catch(IOException ex) {
 		        		ex.printStackTrace();
@@ -74,6 +95,7 @@ public class multicast implements Runnable{
 		
 		
 	}
+	
 	
 	public void start() {
 		if (t == null) {
