@@ -3,9 +3,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
-public class handshake {
-
+public class handshake implements Runnable{
+	
+	Thread t;
 	public void shake() throws Exception {
 		
 			final  String INET_ADDR = "224.0.0.0";
@@ -38,6 +40,25 @@ public class handshake {
 		        	}
 
 		
+	}
+
+	public void start() {
+		
+		if (t == null) {
+	         t = new Thread (this, "svr thrd");
+	         t.start ();
+	      }
+		
+	}
+
+	@Override
+	public void run() {
+		try {
+			shake();
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

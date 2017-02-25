@@ -66,7 +66,7 @@ public class home{
 		//s.start();
 		handshake hs = new handshake();
 		try {
-			hs.shake();
+			hs.start();
 			}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
