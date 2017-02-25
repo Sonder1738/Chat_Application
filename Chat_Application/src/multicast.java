@@ -13,7 +13,7 @@ public class multicast implements Runnable{
 	
 	LinkedList<InetAddress> ipList = new LinkedList<InetAddress>();
 	LinkedList<InetAddress> tempList = new LinkedList<InetAddress>();
-	
+	boolean duplicate;
 	@Override
 	public void run() {
 		try {
@@ -55,7 +55,7 @@ public class multicast implements Runnable{
 		            while (true) {
 		
 		                // Receive the information and print it.
-		
+		            	duplicate=false;
 		                DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
 		                
 		                InetAddress localip = InetAddress.getLocalHost();
@@ -81,9 +81,19 @@ public class multicast implements Runnable{
 		                	}else{
 		                	System.out.println(msgPacket.getAddress()+" Connected");
 					        //testing popup
-					        ipList.add(msgPacket.getAddress());
-					        home h = new home();
-					        h.setList(ipList);
+		                	for(int i=0;i<ipList.size();i++){
+		                		if(msgPacket.getAddress().equals(ipList.get(i))){
+		                			duplicate=true;
+		                		}else{
+		                			duplicate=false;
+		                		}
+		                	}
+		                	if(duplicate==false){
+		                		ipList.add(msgPacket.getAddress());
+						        home h = new home();
+						        h.setList(ipList);
+		                	}
+					        
 				            }
 		                }
 		                

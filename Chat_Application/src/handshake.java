@@ -21,7 +21,7 @@ public class handshake implements Runnable{
 		      
 		
 		        // Open a new DatagramSocket, which will be used to send the data.
-		
+		while(true){
 		        try (DatagramSocket serverSocket = new DatagramSocket()) {
 		
 		            
@@ -41,7 +41,7 @@ public class handshake implements Runnable{
 
 		
 	}
-
+	}
 	public void start() {
 		
 		if (t == null) {
