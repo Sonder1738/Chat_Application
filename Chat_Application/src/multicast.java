@@ -79,7 +79,7 @@ public class multicast implements Runnable{
 		                		home h = new home();
 						        h.setList(ipList);
 		                	}else{
-		                	System.out.println(msgPacket.getAddress()+" Connected");
+		                	System.out.println(msgPacket.getAddress()+" Connected"); //runs but doesnt do anything
 					        //testing popup
 		                	for(int i=0;i<ipList.size();i++){
 		                		if(msgPacket.getAddress().equals(ipList.get(i))){
@@ -89,6 +89,7 @@ public class multicast implements Runnable{
 		                		}
 		                	}
 		                	if(duplicate==false){
+		                		System.out.println("Only once?");
 		                		ipList.add(msgPacket.getAddress());
 						        home h = new home();
 						        h.setList(ipList);

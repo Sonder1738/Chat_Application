@@ -60,5 +60,27 @@ public class handshake implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	public void sendFarewell() throws Exception {
+		final  String INET_ADDR = "224.0.0.0";
+		final int PORT = 8888;
+		InetAddress addr = InetAddress.getByName(INET_ADDR);
+		try (DatagramSocket serverSocket = new DatagramSocket()) {
+			
+            
+    		InetAddress ip = InetAddress.getLocalHost();
+            String msg = "bye";
+            // Create a packet that will contain the data
+
+            // (in the form of bytes) and send it.
+
+            DatagramPacket msgPacket = new DatagramPacket(msg.getBytes(),msg.getBytes().length, addr, PORT);
+            serverSocket.send(msgPacket);
+            //Thread.sleep(500); no pause imediately exits and dont give a chance for any other operations
+    	} catch (IOException ex) {
+
+        ex.printStackTrace();
+    	}
+		
+	}
 
 }

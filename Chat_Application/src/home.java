@@ -33,7 +33,7 @@ import javax.swing.JScrollBar;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import java.awt.GridLayout;
-
+import javax.swing.JOptionPane;
 public class home{
 
 	
@@ -73,8 +73,6 @@ public class home{
 		}
 		
 		
-
-	    
 	    
 		Serialize serial = new Serialize();
 		LinkedList<clients> clients= new LinkedList();
@@ -84,6 +82,7 @@ public class home{
 		System.out.println(b); //prints user login id currently
 		
 		frame = new JFrame("DERICK CHU FYP");
+		frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setContentPane(new homePane()); //is this even needed?
@@ -97,6 +96,26 @@ public class home{
     	
     	//table timer check periodically
     	multicast asdf = new multicast();
+    	
+    	frame.addWindowListener(new java.awt.event.WindowAdapter() {
+    	    @Override
+    	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+    	        if (JOptionPane.showConfirmDialog(frame, 
+    	            "Are you sure to close this window?", "Really Closing?", 
+    	            JOptionPane.YES_NO_OPTION,
+    	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+    	            try {
+						hs.sendFarewell();
+						System.out.println("bye");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    	        	System.exit(0);
+    	        }
+    	    }
+    	});
+    	
     	
     	ActionListener actListner = new ActionListener() 
 	    {
