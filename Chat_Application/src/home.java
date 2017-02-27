@@ -243,7 +243,7 @@ public class home{
 								frame.dispose();
 								startClient.clientIn(textField.getText(),rdbtnPrivate.isSelected());
 								
-							} catch (IOException e) {
+							}catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
