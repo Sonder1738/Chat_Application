@@ -13,7 +13,7 @@ public class Server implements Runnable{
 
 	
 	ServerSocket ssock;
-    int portIn = 15676;
+    int portIn = 15678;
     private Thread t;
     Socket client;
 	boolean isRunning=false;

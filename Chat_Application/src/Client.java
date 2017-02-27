@@ -1,3 +1,4 @@
+import java.awt.Component;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -11,6 +12,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 
 //http://mrbool.com/file-transfer-between-2-computers-with-java/24516
 
@@ -20,41 +23,46 @@ class Client implements Runnable{
 	int portOut = 15678;
 	Socket MyClient;
 	
-	
-	protected void clientIn() throws IOException{
+	protected void clientIn(String ipOut, boolean b) throws IOException{
 		
 		try{
-			MyClient = new Socket("127.0.0.1", portOut);
-		}catch(Exception e){
-			System.out.println("No server available");
-		}
-		System.out.println("Connected to "+MyClient.getInetAddress().getHostAddress());
-		PrintStream out=new PrintStream(MyClient.getOutputStream());
-		BufferedReader stdin=new BufferedReader(new InputStreamReader(System.in));
-		String s;
-		while (  true )
-		{
-			//System.out.print("Client : ");
-			s=stdin.readLine();
+			MyClient = new Socket(ipOut, portOut);
 			
-			out.println(s);
-			
-			if(s.equalsIgnoreCase("BYE")){
-				System.out.println("A"); //server is still running thats why it doesnt end
-				break;
-			}
+			System.out.println("Connected to "+MyClient.getInetAddress().getHostAddress());
+			PrintStream out=new PrintStream(MyClient.getOutputStream());
+			BufferedReader stdin=new BufferedReader(new InputStreamReader(System.in));
+			String s;
+			while (  true )
+			{
+				//System.out.print("Client : ");
+				s=stdin.readLine();
 				
+				out.println(s);
+				
+				if(s.equalsIgnoreCase("BYE")){
+					System.out.println("A"); //server is still running thats why it doesnt end
+					break;
+				}
+					
+			}
+			
+		}catch(Exception e){
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,
+				    "Unable to connect to "+ipOut,
+				    "",
+				    JOptionPane.PLAIN_MESSAGE);
 		}
+		
 	   }
 	public void run(){
-		try {
-			clientIn();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		clientIn();
 		}
 	
+	private void clientIn() {
+		// TODO Auto-generated method stub
+		
+	}
 	public void start() {
 		System.out.println("Connecting..");
 	      if (t == null) {

@@ -108,6 +108,20 @@ public class primary{
 			pass.addActionListener(ev);
 			newuser.addActionListener(ev);
 			
+			pass.addActionListener(new ActionListener() {
+				
+				    public void actionPerformed(ActionEvent e) {
+				
+				        //login.doClick();
+				        ActionEvent b = new ActionEvent(login,0,"alternative login"); //creating action event which login button creates
+						ev.actionPerformed(b); // sending the action to the event listener
+					}
+				
+				});
+
+			
+			
+			
 			newuser.setOpaque(false);
 			newuser.setContentAreaFilled(false);
 			newuser.setBorderPainted(false);
@@ -150,6 +164,9 @@ public class primary{
 		boolean notLoggedIn;
 		
 		public void actionPerformed(ActionEvent e) {
+			
+			
+			
 			
 			if(e.getSource()==login){
 				

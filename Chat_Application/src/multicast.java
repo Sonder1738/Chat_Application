@@ -65,7 +65,7 @@ public class multicast implements Runnable{
 		                
 		                if(msgPacket.getAddress().equals(localip)){
 		                	
-		                	System.out.println("This is conencted to itself");
+		                	//System.out.println("This is conencted to itself"); always gets printed
 		                	
 		                }else{
 		                	if(msg.equals(farewell)){

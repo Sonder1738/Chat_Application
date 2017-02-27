@@ -2,17 +2,20 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridBagLayout;
@@ -64,6 +67,8 @@ public class home{
 		 */
 		//Server s = new Server(); //starts server when logged in? or when want to chat??
 		//s.start();
+		Server s = new Server(); //starts server when logged in. CAUSE user can only connect with the connect button rather than auto
+		s.start();
 		handshake hs = new handshake();
 		try {
 			hs.start();
@@ -188,9 +193,68 @@ public class home{
         	public void actionPerformed(ActionEvent arg0) {
         		//Client c = new Client();
         		//c.start();
-        		chatFrame cf = new chatFrame();
-        		cf.start();
+        		//chatFrame cf = new chatFrame();
+        		//cf.start();
+        		JPanel contentPane;
+        		JTextField textField;
         		
+        		JFrame frame = new JFrame();
+				frame.setVisible(true);
+				frame.setResizable(false);
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame.setBounds(100, 100, 297, 123);
+				frame.setLocationRelativeTo(null);
+				contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				frame.setContentPane(contentPane);
+				contentPane.setLayout(null);
+				
+				textField = new JTextField();
+				textField.setBounds(10, 36, 178, 20);
+				contentPane.add(textField);
+				textField.setColumns(10);
+				
+				JLabel lblIpAddress = new JLabel("IP Address");
+				lblIpAddress.setBounds(10, 11, 91, 14);
+				contentPane.add(lblIpAddress);
+				
+				JButton btnChat = new JButton("Chat!");
+				btnChat.setBounds(191, 35, 89, 23);
+				contentPane.add(btnChat);
+				
+				JRadioButton rdbtnPrivate = new JRadioButton("Private");
+				rdbtnPrivate.setBounds(10, 63, 109, 23);
+				contentPane.add(rdbtnPrivate);
+				
+				btnChat.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println(rdbtnPrivate.isSelected());
+						System.out.println(textField.getText());
+						
+						if(textField.getText().isEmpty()){
+							System.out.println("Here");
+							JOptionPane.showMessageDialog(frame,
+								    "Field cannot be empty",
+								    "Warning",
+								    JOptionPane.WARNING_MESSAGE);
+						}else{
+							Client startClient = new Client();
+							try {
+								frame.dispose();
+								startClient.clientIn(textField.getText(),rdbtnPrivate.isSelected());
+								
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						}
+					}
+				});
+				
+				
+				
+				
         	}
         });
         
