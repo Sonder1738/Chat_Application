@@ -83,7 +83,7 @@ public class home{
 		
 		frame = new JFrame("DERICK CHU FYP");
 		frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(frame.DO_NOTHING_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setContentPane(new homePane()); //is this even needed?
         frame.setLocationRelativeTo(null);
@@ -100,10 +100,12 @@ public class home{
     	frame.addWindowListener(new java.awt.event.WindowAdapter() {
     	    @Override
     	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+    	    	
     	        if (JOptionPane.showConfirmDialog(frame, 
-    	            "Are you sure to close this window?", "Really Closing?", 
+    	            "Are you sure you want to exit?", "Exit Program?", 
     	            JOptionPane.YES_NO_OPTION,
     	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+    	        	
     	            try {
 						hs.sendFarewell();
 						System.out.println("bye");
@@ -186,6 +188,8 @@ public class home{
         	public void actionPerformed(ActionEvent arg0) {
         		//Client c = new Client();
         		//c.start();
+        		chatFrame cf = new chatFrame();
+        		cf.start();
         		
         	}
         });
@@ -263,7 +267,7 @@ public class home{
 		}
 	}
 	
-	public void run() {
+	public void run() { //never called?
 		try {
 			home window = new home();
 			window.frame.setVisible(true);
