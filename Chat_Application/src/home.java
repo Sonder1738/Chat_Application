@@ -238,15 +238,10 @@ public class home{
 								    "Warning",
 								    JOptionPane.WARNING_MESSAGE);
 						}else{
-							Client startClient = new Client();
-							try {
-								frame.dispose();
-								startClient.clientIn(textField.getText(),rdbtnPrivate.isSelected());
-								
-							}catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							//Client startClient = new Client();
+							chatFrame chatFrame = new chatFrame();
+							frame.dispose();
+							chatFrame.start(textField.getText(),rdbtnPrivate.isSelected());
 							
 						}
 					}
@@ -321,10 +316,7 @@ public class home{
         frame.setVisible(true);
 	}
 
-	
-	
-	
-	
+
 	
 	public class homePane extends JPanel{
 		public homePane(){

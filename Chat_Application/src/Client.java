@@ -22,53 +22,71 @@ class Client implements Runnable{
 	private Thread t;
 	int portOut = 15678;
 	Socket MyClient;
+	String ip;
+	boolean priv;
+	String message;
 	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	protected void clientIn(String ipOut, boolean b) throws IOException{
 		
-		try{
+		
 			MyClient = new Socket(ipOut, portOut);
 			
 			System.out.println("Connected to "+MyClient.getInetAddress().getHostAddress());
 			PrintStream out=new PrintStream(MyClient.getOutputStream());
 			BufferedReader stdin=new BufferedReader(new InputStreamReader(System.in));
 			String s;
-			while (  true )
+			
+			while(true)
 			{
 				//System.out.print("Client : ");
 				s=stdin.readLine();
-				
-				out.println(s);
-				
-				if(s.equalsIgnoreCase("BYE")){
-					System.out.println("A"); //server is still running thats why it doesnt end
-					break;
-				}
-					
+				out.println(message); //fix this enabling user to chat ACROSS AND TO ITSELF
 			}
+				
+				
+				
+					
 			
-		}catch(Exception e){
-			Component frame = null;
-			JOptionPane.showMessageDialog(frame,
-				    "Unable to connect to "+ipOut,
-				    "",
-				    JOptionPane.PLAIN_MESSAGE);
-		}
+			
+		
+			
+		
 		
 	   }
 	public void run(){
-		clientIn();
+		try {
+			clientIn(ip,priv);
+		} catch (IOException e) {
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,
+				    "Unable to connect to "+ip,
+				    "",
+				    JOptionPane.PLAIN_MESSAGE);
+			
+			chatFrame cf = new chatFrame();
+			cf.getMainFrame().dispose();
+		}
 		}
 	
-	private void clientIn() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void start() {
+	
+	public void start(String string, boolean b) {
+		this.ip=string;
+		this.priv=b;
 		System.out.println("Connecting..");
 	      if (t == null) {
 	         t = new Thread (this, "svr thrd");
 	         t.start ();
 	      }
+		
+	}
+	public void msgOut() {
+		System.out.println(message);
 		
 	}
 }
