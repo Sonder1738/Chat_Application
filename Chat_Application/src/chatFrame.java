@@ -77,7 +77,12 @@ public class chatFrame implements Runnable{
     	    	
     	    	Client c = new Client();
     	    	c.setMessage(text);
-    	    	c.msgOut();
+    	    	try {
+					c.msgOut();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
     	    	textArea.append("\n"+text);
     	    	textField.setText("");
     	    	

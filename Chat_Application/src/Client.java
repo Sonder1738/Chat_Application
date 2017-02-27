@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 class Client implements Runnable{
 	private Thread t;
 	int portOut = 15678;
-	Socket MyClient;
+	static Socket MyClient;
 	String ip;
 	boolean priv;
 	String message;
@@ -38,16 +38,16 @@ class Client implements Runnable{
 			MyClient = new Socket(ipOut, portOut);
 			
 			System.out.println("Connected to "+MyClient.getInetAddress().getHostAddress());
-			PrintStream out=new PrintStream(MyClient.getOutputStream());
-			BufferedReader stdin=new BufferedReader(new InputStreamReader(System.in));
-			String s;
 			
-			while(true)
-			{
+			//BufferedReader stdin=new BufferedReader(new InputStreamReader(System.in));
+			//String s;
+			
+			
+			
 				//System.out.print("Client : ");
-				s=stdin.readLine();
-				out.println(message); //fix this enabling user to chat ACROSS AND TO ITSELF
-			}
+				//s=stdin.readLine();
+				//out.println(message); //fix this enabling user to chat ACROSS AND TO ITSELF
+			
 				
 				
 				
@@ -85,8 +85,9 @@ class Client implements Runnable{
 	      }
 		
 	}
-	public void msgOut() {
-		System.out.println(message);
+	public void msgOut() throws IOException {
+		PrintStream out=new PrintStream(MyClient.getOutputStream());
+		out.println(message);
 		
 	}
 }
