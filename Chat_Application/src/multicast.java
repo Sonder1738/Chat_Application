@@ -79,7 +79,7 @@ public class multicast implements Runnable{
 		                		home h = new home();
 						        h.setList(ipList);
 		                	}else{
-		                	System.out.println(msgPacket.getAddress()+" Connected"); //runs but doesnt do anything
+		                	//System.out.println(msgPacket.getAddress()+" Connected"); //always runs waiting for connections
 					        //testing popup
 		                	for(int i=0;i<ipList.size();i++){
 		                		if(msgPacket.getAddress().equals(ipList.get(i))){

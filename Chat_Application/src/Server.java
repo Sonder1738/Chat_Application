@@ -31,7 +31,7 @@ public class Server implements Runnable{
             	}
             	
                 client = ssock.accept();
-                //System.out.println(client.getInetAddress().getHostAddress() +" connected "); WILL KEEP PRINTING USER CONNECTED
+                System.out.println(client.getInetAddress().getHostAddress() +" connected ");
                 
                 PrintWriter out = new PrintWriter(client.getOutputStream(),true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
