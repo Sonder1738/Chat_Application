@@ -31,7 +31,7 @@ public class Server implements Runnable{
             	}
             	
                 client = ssock.accept();
-                System.out.println(client.getInetAddress().getHostAddress() +" connected ");
+                //System.out.println(client.getInetAddress().getHostAddress() +" connected "); WILL KEEP PRINTING USER CONNECTED
                 
                 PrintWriter out = new PrintWriter(client.getOutputStream(),true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -42,7 +42,8 @@ public class Server implements Runnable{
                 	line=input.readLine();
                 	
                 	if(line.equalsIgnoreCase("gbye1738")){
-                		line="Client has disconnected";
+                		String disconnectline=" has disconnected";
+                		cf.printMsg(client.getInetAddress().getHostAddress()+disconnectline);
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
                 	}else{
