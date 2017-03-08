@@ -18,8 +18,6 @@ public class Server implements Runnable{
     Socket client;
 	boolean isRunning=false;
 	Thread server;
-
-
 	
 	protected void serverIn()
     {
@@ -38,11 +36,13 @@ public class Server implements Runnable{
                 PrintWriter out = new PrintWriter(client.getOutputStream(),true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String line;
+                chatFrame cf = new chatFrame();
                 
                 while(true){
                 	line=input.readLine();
+                	cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 	
-                	System.out.println(client.getInetAddress().getHostAddress()+" : "+line);
+                	System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
                 	if(line.equalsIgnoreCase("BYE")){
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;

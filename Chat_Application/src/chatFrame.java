@@ -34,7 +34,7 @@ public class chatFrame implements Runnable{
 
 	static JFrame frame; //Making it static could cause problems
 	private JTextField textField;
-
+	static JTextArea textArea = new JTextArea();
 	
 
 	/**
@@ -54,7 +54,7 @@ public class chatFrame implements Runnable{
         gridBagLayout.rowWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
         frame.getContentPane().setLayout(gridBagLayout);
         
-        JTextArea textArea = new JTextArea();
+        
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -65,7 +65,7 @@ public class chatFrame implements Runnable{
         frame.getContentPane().add(scrollPane, gbc_scrollPane);
         
         JScrollBar autoScroll = scrollPane.getVerticalScrollBar(); //autoscroll to bottom
-        autoScroll.setValue(autoScroll.getMaximum());
+        
         
         Action action = new AbstractAction()
     	{
@@ -73,18 +73,22 @@ public class chatFrame implements Runnable{
     	    public void actionPerformed(ActionEvent e)
     	    {
     	    	
-    	    	String text = textField.getText();
+    	    	String myText = textField.getText();
+    	    	textArea.append(myText+"\n");
+    	    	textField.setText("");
     	    	
     	    	Client c = new Client();
-    	    	c.setMessage(text);
+    	    	c.setMessage(myText);
     	    	try {
+					Thread.sleep(200);
 					c.msgOut();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					autoScroll.setValue(autoScroll.getMaximum());
+				} catch (Exception b) {
+					
 				}
-    	    	textArea.append("\n"+text);
-    	    	textField.setText("");
+    	    	
+    	    	
+    	    	
     	    	
     	    }
     	};
@@ -140,6 +144,10 @@ public class chatFrame implements Runnable{
 	public final JFrame getMainFrame(){
         return frame;
     }
+
+	public void printMsg(String line) {
+		textArea.append(line+"\n"); //message from server INSTEAD
+	}
 
 	
 
