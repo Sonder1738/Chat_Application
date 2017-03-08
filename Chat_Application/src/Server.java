@@ -40,14 +40,18 @@ public class Server implements Runnable{
                 
                 while(true){
                 	line=input.readLine();
-                	cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 	
-                	System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
                 	if(line.equalsIgnoreCase("gbye1738")){
+                		line="Client has disconnected";
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
+                	}else{
+                		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 	}
-                  
+                	
+                	
+                	System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
+                	
                   }
                
             }

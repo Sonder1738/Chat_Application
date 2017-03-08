@@ -83,7 +83,7 @@ public class chatFrame implements Runnable{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-    	        	System.exit(0);
+    	        	frame.dispose();
     	        }
     	    }
     	});
