@@ -275,7 +275,7 @@ public class home{
         panel_2.setBounds(607, 0, 99, 541);
         frame.getContentPane().add(panel_2);
         
-        JButton btnNewButton = new JButton("New button");
+        JButton btnNewButton = new JButton("New button"); //test button
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		dtm.addRow(new Object[] {"HI"});

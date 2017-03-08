@@ -44,7 +44,7 @@ public class chatFrame implements Runnable{
 	 */
 	public void start(String string, boolean b) {
 		frame = new JFrame("DERICK CHU FYP");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setSize(434, 404);
         frame.setLocationRelativeTo(null);
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -65,6 +65,28 @@ public class chatFrame implements Runnable{
         frame.getContentPane().add(scrollPane, gbc_scrollPane);
         
         JScrollBar autoScroll = scrollPane.getVerticalScrollBar(); //autoscroll to bottom
+        
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+    	    @Override
+    	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+    	    	Client c = new Client();
+    	        if (JOptionPane.showConfirmDialog(frame, 
+    	            "Are you sure you want to close the chat?", "Exit Chat?", 
+    	            JOptionPane.YES_NO_OPTION,
+    	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+    	        	
+    	            try {
+    	            	c.setMessage("gbye1738");
+    	            	c.msgOut();
+						System.out.println("bye");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    	        	System.exit(0);
+    	        }
+    	    }
+    	});
         
         
         Action action = new AbstractAction()

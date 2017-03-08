@@ -43,7 +43,7 @@ public class Server implements Runnable{
                 	cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 	
                 	System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
-                	if(line.equalsIgnoreCase("BYE")){
+                	if(line.equalsIgnoreCase("gbye1738")){
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
                 	}
