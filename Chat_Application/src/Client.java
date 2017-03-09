@@ -22,6 +22,7 @@ class Client implements Runnable{
 	private Thread t;
 	int portOut = 15678;
 	static Socket MyClient;
+	static Socket fileSendSocket;
 	String ip;
 	boolean priv;
 	String message;
@@ -85,6 +86,15 @@ class Client implements Runnable{
 	}
 	
 	
+	public static Socket getFileSendSocket() {
+		return fileSendSocket;
+	}
+	public static void setFileSendSocket(Socket fileSendSocket) {
+		Client.fileSendSocket = fileSendSocket;
+	}
+	
+	
+	
 	public void start(String string, boolean b) {
 		this.ip=string;
 		this.priv=b;
@@ -99,6 +109,11 @@ class Client implements Runnable{
 		PrintStream out=new PrintStream(MyClient.getOutputStream());
 		out.println(message);
 		
+	}
+	public void sendFile(int port) throws Exception {
+		
+		fileSendSocket = new Socket(ip, port);
+		System.out.println("sending file to "+fileSendSocket.getInetAddress().getHostAddress());
 	}
 	
 }

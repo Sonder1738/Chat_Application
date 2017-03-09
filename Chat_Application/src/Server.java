@@ -13,11 +13,15 @@ public class Server implements Runnable{
 
 	
 	ServerSocket ssock;
+	Socket client;
     int portIn = 15678;
     private Thread t;
-    Socket client;
-	boolean isRunning=false;
+    boolean isRunning=false;
 	Thread server;
+	
+	ServerSocket filereceive;
+	Socket filesend;
+	int portFileIn = 15679;
 	
 	protected void serverIn()
     {
@@ -48,20 +52,27 @@ public class Server implements Runnable{
                 		break;
                 	}else if(line.equalsIgnoreCase("fsendnow")){
                 		
+                		
+                		filereceive = new ServerSocket(portFileIn);
+                        filesend = filereceive.accept();
+                        System.out.println(filesend.getInetAddress().getHostAddress() +" connected ");
+                		
                 		byte[] buffer = new byte[8192];
 
-                		FileOutputStream fos = new FileOutputStream("a.png");
+                		FileOutputStream fos = new FileOutputStream("b.png");
                 		BufferedOutputStream out2 = new BufferedOutputStream(fos);
                 		
                 		int count;
-                		InputStream in = client.getInputStream();
+                		InputStream in = filesend.getInputStream();
                 		while((count=in.read(buffer)) >0){
                 			fos.write(buffer, 0, count);
                 		}
                 		fos.close();
                 		System.out.println("DONE?");
+                		filereceive.close();
                 		}else{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
+                		
                 	}
                 	
                 	

@@ -154,19 +154,21 @@ public class chatFrame implements Runnable{
                     OutputStream out;
                     byte[] buffer = new byte[8192];
 					try {
-						c.setMessage("fsendnow");//send once yo
+						int port =15679;
+						
+						c.setMessage("fsendnow");
 						c.msgOut();
+						c.sendFile(port);
 						
 						
-						
-						out = c.getMyClient().getOutputStream();
+						out = c.getFileSendSocket().getOutputStream();
 						BufferedInputStream in = new BufferedInputStream(new FileInputStream(filesend));
 						while ((count = in.read(buffer)) > 0) {
 						     out.write(buffer, 0, count);
 						     out.flush();
 						}
-					    //c.getMyClient().close();  FIGURE THIS OUT@@@@ IF I DONT CLOSE THE SOCKET, THE FILE CANT  BE OPENED. IF CLOSE I LOSE CHAT
-					}catch (IOException e) {
+					    c.getFileSendSocket().close(); //closes the filesend sockets
+					}catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
