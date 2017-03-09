@@ -46,12 +46,26 @@ public class Server implements Runnable{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+disconnectline);
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
-                	}else{
+                	}else if(line.equalsIgnoreCase("fsendnow")){
+                		
+                		byte[] buffer = new byte[8192];
+
+                		FileOutputStream fos = new FileOutputStream("a.png");
+                		BufferedOutputStream out2 = new BufferedOutputStream(fos);
+                		
+                		int count;
+                		InputStream in = client.getInputStream();
+                		while((count=in.read(buffer)) >0){
+                			fos.write(buffer, 0, count);
+                		}
+                		fos.close();
+                		System.out.println("DONE?");
+                		}else{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 	}
                 	
                 	
-                	System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
+                	//System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
                 	
                   }
                

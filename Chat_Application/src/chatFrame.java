@@ -14,7 +14,15 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import javax.swing.JTextArea;
 import java.awt.GridLayout;
@@ -26,8 +34,11 @@ import java.awt.CardLayout;
 import java.awt.Component;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class chatFrame implements Runnable{
@@ -35,6 +46,7 @@ public class chatFrame implements Runnable{
 	static JFrame frame; //Making it static could cause problems
 	private JTextField textField;
 	static JTextArea textArea = new JTextArea();
+	private JButton btnNewButton;
 	
 
 	/**
@@ -89,6 +101,9 @@ public class chatFrame implements Runnable{
     	});
         
         
+        
+        
+        
         Action action = new AbstractAction()
     	{
     	    @Override
@@ -114,6 +129,67 @@ public class chatFrame implements Runnable{
     	    	
     	    }
     	};
+        
+        btnNewButton = new JButton("Send File");
+        btnNewButton.addActionListener(new ActionListener() {
+        	
+        	Client c = new Client();
+        	
+        	
+        	
+        	public void actionPerformed(ActionEvent arg0) {
+        		JFileChooser chooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Images", "jpg", "gif","png");
+                FileNameExtensionFilter filter2 = new FileNameExtensionFilter(
+                        "Document", "docx", "doc","pdf","pptx");
+                chooser.setFileFilter(filter);
+                chooser.setFileFilter(filter2);
+                Component parent = null;
+        		int returnVal = chooser.showOpenDialog(parent);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                	
+                	File filesend = new File(chooser.getSelectedFile().getPath());
+                	int count;
+                    OutputStream out;
+                    byte[] buffer = new byte[8192];
+					try {
+						c.setMessage("fsendnow");//send once yo
+						c.msgOut();
+						
+						
+						
+						out = c.getMyClient().getOutputStream();
+						BufferedInputStream in = new BufferedInputStream(new FileInputStream(filesend));
+						while ((count = in.read(buffer)) > 0) {
+						     out.write(buffer, 0, count);
+						     out.flush();
+						}
+					    //c.getMyClient().close();  FIGURE THIS OUT@@@@ IF I DONT CLOSE THE SOCKET, THE FILE CANT  BE OPENED. IF CLOSE I LOSE CHAT
+					}catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                	
+            		
+            		
+					
+								
+						System.out.println("Done.");	
+						
+					
+                	
+                   
+                }
+        	}
+        });
+        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+        gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
+        gbc_btnNewButton.anchor = GridBagConstraints.EAST;
+        gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+        gbc_btnNewButton.gridx = 0;
+        gbc_btnNewButton.gridy = 1;
+        frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
         
         JPanel panel = new JPanel();
         GridBagConstraints gbc_panel = new GridBagConstraints();

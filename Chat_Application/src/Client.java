@@ -75,6 +75,16 @@ class Client implements Runnable{
 		}
 	
 	
+	
+	
+	public static Socket getMyClient() {
+		return MyClient;
+	}
+	public static void setMyClient(Socket myClient) {
+		MyClient = myClient;
+	}
+	
+	
 	public void start(String string, boolean b) {
 		this.ip=string;
 		this.priv=b;
@@ -90,6 +100,7 @@ class Client implements Runnable{
 		out.println(message);
 		
 	}
+	
 }
 
 
