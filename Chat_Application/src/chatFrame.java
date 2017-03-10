@@ -41,6 +41,7 @@ import javax.swing.JFileChooser;
 import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JProgressBar;
 
 
 public class chatFrame implements Runnable{
@@ -49,6 +50,7 @@ public class chatFrame implements Runnable{
 	private JTextField textField;
 	static JTextArea textArea = new JTextArea();
 	private JButton btnNewButton;
+	private JPanel panel_1;
 	
 
 	/**
@@ -63,7 +65,7 @@ public class chatFrame implements Runnable{
         frame.setLocationRelativeTo(null);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{418, 0};
-        gridBagLayout.rowHeights = new int[]{296, 33, 19, 0};
+        gridBagLayout.rowHeights = new int[]{298, 46, 23, 0};
         gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
         gridBagLayout.rowWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
         frame.getContentPane().setLayout(gridBagLayout);
@@ -132,7 +134,17 @@ public class chatFrame implements Runnable{
     	    }
     	};
         
+        panel_1 = new JPanel();
+        GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+        gbc_panel_1.insets = new Insets(0, 0, 5, 0);
+        gbc_panel_1.fill = GridBagConstraints.BOTH;
+        gbc_panel_1.gridx = 0;
+        gbc_panel_1.gridy = 1;
+        frame.getContentPane().add(panel_1, gbc_panel_1);
+        panel_1.setLayout(new BorderLayout(0, 0));
+        
         btnNewButton = new JButton("Send File");
+        panel_1.add(btnNewButton, BorderLayout.EAST);
         btnNewButton.addActionListener(new ActionListener() {
         	
         	Client c = new Client();
@@ -188,13 +200,6 @@ public class chatFrame implements Runnable{
                 }
         	}
         });
-        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-        gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
-        gbc_btnNewButton.anchor = GridBagConstraints.EAST;
-        gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-        gbc_btnNewButton.gridx = 0;
-        gbc_btnNewButton.gridy = 1;
-        frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
         
         JPanel panel = new JPanel();
         GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -204,7 +209,7 @@ public class chatFrame implements Runnable{
         frame.getContentPane().add(panel, gbc_panel);
         GridBagLayout gbl_panel = new GridBagLayout();
         gbl_panel.columnWidths = new int[]{414, 0};
-        gbl_panel.rowHeights = new int[]{18, 0};
+        gbl_panel.rowHeights = new int[]{21, 0};
         gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
         gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         panel.setLayout(gbl_panel);

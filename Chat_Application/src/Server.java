@@ -58,7 +58,6 @@ public class Server implements Runnable{
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
                 	}else if(line.equalsIgnoreCase("fsendnow")){
-                		System.out.println("Its receiving?");
                 		
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();
@@ -69,6 +68,7 @@ public class Server implements Runnable{
                 		try (DataInputStream d = new DataInputStream(in)) {
                 		    String fileName = d.readUTF();
                 		    Files.copy(d, Paths.get(fileName)); //specify path here under .get
+                		    System.out.println(d.readByte());
                 		}
                 		
                 		filereceive.close();
