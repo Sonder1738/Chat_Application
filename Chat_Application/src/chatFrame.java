@@ -92,7 +92,7 @@ public class chatFrame implements Runnable{
     	            try {
     	            	c.setMessage("gbye1738");
     	            	c.msgOut();
-						System.out.println("bye");
+						System.out.println("bye"); //del
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -224,7 +224,7 @@ public class chatFrame implements Runnable{
         frame.setVisible(true);
         
         	
-        Client startCon = new Client();
+        Client startCon = new Client(); //starts the client and send the IP and boolean private over
         startCon.start(string, b);
 		//startCon.clientIn(string, b);
 	}

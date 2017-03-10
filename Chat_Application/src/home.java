@@ -232,7 +232,6 @@ public class home{
 						System.out.println(textField.getText());
 						
 						if(textField.getText().isEmpty()){
-							System.out.println("Here");
 							JOptionPane.showMessageDialog(frame,
 								    "Field cannot be empty",
 								    "Warning",

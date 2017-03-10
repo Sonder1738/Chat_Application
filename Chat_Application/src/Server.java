@@ -58,7 +58,7 @@ public class Server implements Runnable{
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
                 	}else if(line.equalsIgnoreCase("fsendnow")){
-                		
+                		System.out.println("Its receiving?");
                 		
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();

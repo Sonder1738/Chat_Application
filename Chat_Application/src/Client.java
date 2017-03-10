@@ -23,7 +23,7 @@ class Client implements Runnable{
 	int portOut = 15678;
 	static Socket MyClient;
 	static Socket fileSendSocket;
-	String ip;
+	static String ip;
 	boolean priv;
 	String message;
 	
