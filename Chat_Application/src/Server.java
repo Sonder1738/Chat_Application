@@ -68,7 +68,8 @@ public class Server implements Runnable{
                 		try (DataInputStream d = new DataInputStream(in)) {
                 		    String fileName = d.readUTF();
                 		    Files.copy(d, Paths.get(fileName)); //specify path here under .get
-                		    System.out.println(d.readByte());
+                		}catch(Exception e){
+                			//do nothing
                 		}
                 		
                 		filereceive.close();
