@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Server implements Runnable{
 
@@ -23,7 +28,9 @@ public class Server implements Runnable{
 	Socket filesend;
 	int portFileIn = 15679;
 	
-	protected void serverIn()
+	
+	
+	protected void serverIn() throws Exception
     {
 		try
         {
@@ -55,20 +62,15 @@ public class Server implements Runnable{
                 		
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();
-                        System.out.println(filesend.getInetAddress().getHostAddress() +" connected ");
-                		
+                       
                 		byte[] buffer = new byte[8192];
 
-                		FileOutputStream fos = new FileOutputStream("b.png");
-                		BufferedOutputStream out2 = new BufferedOutputStream(fos);
-                		
-                		int count;
-                		InputStream in = filesend.getInputStream();
-                		while((count=in.read(buffer)) >0){
-                			fos.write(buffer, 0, count);
+                		BufferedInputStream in = new BufferedInputStream(filesend.getInputStream());
+                		try (DataInputStream d = new DataInputStream(in)) {
+                		    String fileName = d.readUTF();
+                		    Files.copy(d, Paths.get(fileName)); //specify path here under .get
                 		}
-                		fos.close();
-                		System.out.println("DONE?");
+                		
                 		filereceive.close();
                 		}else{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
@@ -93,7 +95,12 @@ public class Server implements Runnable{
 
 	
 	public void run(){
-		serverIn();
+		try {
+			serverIn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		}
 	

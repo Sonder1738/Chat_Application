@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
 
 import javax.swing.JTextArea;
 import java.awt.GridLayout;
@@ -151,7 +153,7 @@ public class chatFrame implements Runnable{
                 	
                 	File filesend = new File(chooser.getSelectedFile().getPath());
                 	int count;
-                    OutputStream out;
+                    //OutputStream out;
                     byte[] buffer = new byte[8192];
 					try {
 						int port =15679;
@@ -161,11 +163,10 @@ public class chatFrame implements Runnable{
 						c.sendFile(port);
 						
 						
-						out = c.getFileSendSocket().getOutputStream();
-						BufferedInputStream in = new BufferedInputStream(new FileInputStream(filesend));
-						while ((count = in.read(buffer)) > 0) {
-						     out.write(buffer, 0, count);
-						     out.flush();
+						BufferedOutputStream out = new BufferedOutputStream(c.getFileSendSocket().getOutputStream());
+						try (DataOutputStream d = new DataOutputStream(out)) {
+						    d.writeUTF(chooser.getSelectedFile().getName());
+						    Files.copy(chooser.getSelectedFile().toPath(), d);
 						}
 					    c.getFileSendSocket().close(); //closes the filesend sockets
 					}catch (Exception e) {
