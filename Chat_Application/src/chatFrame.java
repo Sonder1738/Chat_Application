@@ -141,12 +141,14 @@ public class chatFrame implements Runnable{
         	
         	public void actionPerformed(ActionEvent arg0) {
         		JFileChooser chooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                FileNameExtensionFilter images = new FileNameExtensionFilter(
                     "Images", "jpg", "gif","png");
-                FileNameExtensionFilter filter2 = new FileNameExtensionFilter(
-                        "Document", "docx", "doc","pdf","pptx");
-                chooser.setFileFilter(filter);
-                chooser.setFileFilter(filter2);
+                FileNameExtensionFilter document = new FileNameExtensionFilter(
+                        "Document", "docx", "doc","pdf","pptx","txt");
+                
+               	chooser.addChoosableFileFilter(images);
+                chooser.addChoosableFileFilter(document);
+                
                 Component parent = null;
         		int returnVal = chooser.showOpenDialog(parent);
                 if(returnVal == JFileChooser.APPROVE_OPTION) {
