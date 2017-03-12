@@ -17,7 +17,7 @@ import javax.swing.*;
 public class register {
 	
 	private JFrame frame;
-	
+	private JButton back = new JButton("Back");
 	private JButton reg = new JButton("Register");
 	private JLabel id = new JLabel("ID :");
 	private JLabel pw = new JLabel("Password :");
@@ -43,6 +43,7 @@ public class register {
 			pwf.addMouseListener(me);
 			pwf.addKeyListener(ke);
 			reg.setEnabled(false);
+			back.addActionListener(re);
 			
 			setLayout(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
@@ -59,9 +60,11 @@ public class register {
 			add(pwf,gbc);
 			gbc.gridx+=1;
 			gbc.gridy--;
-			gbc.gridheight=2;
-			gbc.fill = GridBagConstraints.VERTICAL;
+			//gbc.gridheight=2;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
 			add(reg,gbc);
+			gbc.gridy--;
+			add(back,gbc);
 		}
 	}
 	
@@ -112,6 +115,10 @@ public class register {
 				
 				JOptionPane.showMessageDialog(null,
 					    "Guy Registered");
+				primary primaryFrame = new primary();
+				frame.dispose();
+			}
+			if(e.getSource()==back){
 				primary primaryFrame = new primary();
 				frame.dispose();
 			}

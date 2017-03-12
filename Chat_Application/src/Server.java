@@ -1,3 +1,4 @@
+import java.awt.Component;
 import java.io.*;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -59,26 +60,36 @@ public class Server implements Runnable{
                 		break;
                 	}else if(line.equalsIgnoreCase("fsendnow")){
                 		
+                		
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();
-                       
+                        
                 		byte[] buffer = new byte[8192];
 
                 		BufferedInputStream in = new BufferedInputStream(filesend.getInputStream());
                 		try (DataInputStream d = new DataInputStream(in)) {
+                			
                 		    String fileName = d.readUTF();
                 		    Files.copy(d, Paths.get(fileName)); //specify path here under .get
-                		}catch(Exception e){
+            		        
+                			}catch(Exception e){
                 			//do nothing
                 		}
                 		
                 		filereceive.close();
                 		}else{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
-                		
-                	}
+                		}
                 	
-                	
+                	/*
+                		int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+          JOptionPane.showMessageDialog(null, "HELLO");
+        }
+        else {
+           JOptionPane.showMessageDialog(null, "GOODBYE");
+           System.exit(0); //incase i need the dialog confirmation for receiving file
+        }*/
                 	//System.out.println(client.getInetAddress().getHostAddress()+" : "+line); //sends to the FRAME TO UPDATE?
                 	
                   }

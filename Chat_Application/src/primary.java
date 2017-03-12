@@ -197,6 +197,7 @@ public class primary{
 				
 			
 			if(e.getSource()==newuser){
+				
 				frame.dispose();
 				registerFrame.start();
 			}

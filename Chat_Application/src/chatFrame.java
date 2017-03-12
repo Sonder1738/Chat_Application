@@ -2,6 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
@@ -24,7 +29,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Security;
+import java.util.Arrays;
+import java.util.Base64;
 
 import javax.swing.JTextArea;
 import java.awt.GridLayout;
@@ -52,7 +65,8 @@ public class chatFrame implements Runnable{
 	private JButton btnNewButton;
 	private JPanel panel_1;
 	
-
+	private static SecretKeySpec secretKey;
+    private static byte[] key;
 	/**
 	 * @param b 
 	 * @param string 
@@ -113,25 +127,29 @@ public class chatFrame implements Runnable{
     	    @Override
     	    public void actionPerformed(ActionEvent e)
     	    {
-    	    	
     	    	String myText = textField.getText();
-    	    	textArea.append(myText+"\n");
-    	    	textField.setText("");
     	    	
-    	    	Client c = new Client();
-    	    	c.setMessage(myText);
-    	    	try {
-					Thread.sleep(200);
-					c.msgOut();
-					autoScroll.setValue(autoScroll.getMaximum());
-				} catch (Exception b) {
-					
-				}
-    	    	
-    	    	
-    	    	
-    	    	
-    	    }
+    	    	if(b==true){
+    	    		setKey("mypass");
+    	    		System.out.println(encrypt(myText, "mypass2")); //CONTINUE THE ENCRYPTION SHIT!!!
+    	    		System.out.println(decrypt(encrypt(myText, "mypass2"), "mypass2"));
+					textField.setText("");
+    	    	}else{
+    	    		//String myText = textField.getText();
+        	    	textArea.append(myText+"\n");
+        	    	textField.setText("");
+        	    	
+        	    	Client c = new Client();
+        	    	c.setMessage(myText);
+        	    	try {
+    					Thread.sleep(200);
+    					c.msgOut();
+    					autoScroll.setValue(autoScroll.getMaximum());
+    				} catch (Exception b) {
+    					
+    				}
+    	    	}
+	    }
     	};
         
         panel_1 = new JPanel();
@@ -182,22 +200,13 @@ public class chatFrame implements Runnable{
 						    d.writeUTF(chooser.getSelectedFile().getName());
 						    Files.copy(chooser.getSelectedFile().toPath(), d);
 						}
-					    c.getFileSendSocket().close(); //closes the filesend sockets
+					   
 					}catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-                	
-            		
-            		
-					
-								
-						System.out.println("Done.");	
-						
-					
-                	
-                   
-                }
+                	System.out.println("Done.");	
+				}
         	}
         });
         
@@ -258,7 +267,57 @@ public class chatFrame implements Runnable{
 	}
 
 	
-
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ENCRYPTION@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	    	
+	
+	public static void setKey(String myKey) 
+    {
+        MessageDigest sha = null;
+        try {
+            key = myKey.getBytes("UTF-8");
+            sha = MessageDigest.getInstance("SHA-1");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16); 
+            secretKey = new SecretKeySpec(key, "AES");
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+ 
+    public static String encrypt(String strToEncrypt, String secret) 
+    {
+        try
+        {
+            setKey(secret);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Error while encrypting: " + e.toString());
+        }
+        return null;
+    }
+ 
+    public static String decrypt(String strToDecrypt, String secret) 
+    {
+        try
+        {
+            setKey(secret);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Error while decrypting: " + e.toString());
+        }
+        return null;
+    }
+	
+	
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ENCRYPTION@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	  
 
 
 }
