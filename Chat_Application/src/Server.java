@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 public class Server implements Runnable{
 
@@ -60,7 +61,6 @@ public class Server implements Runnable{
                 		break;
                 	}else if(line.equalsIgnoreCase("fsendnow")){
                 		
-                		
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();
                         
@@ -70,13 +70,25 @@ public class Server implements Runnable{
                 		try (DataInputStream d = new DataInputStream(in)) {
                 			
                 		    String fileName = d.readUTF();
-                		    Files.copy(d, Paths.get(fileName)); //specify path here under .get
+                		    
+                		    int reply = JOptionPane.showConfirmDialog(null, "Do you want to receive the file : "+fileName+" ?", "Incoming file", JOptionPane.YES_NO_OPTION);
+                	        if (reply == JOptionPane.YES_OPTION) {
+                	          JOptionPane.showMessageDialog(null, "Receiving file..");
+                	          Files.copy(d, Paths.get(fileName));//specify path here under .get
+                	          JOptionPane.showMessageDialog(null, "File Received");
+                	          filereceive.close();
+                	          
+                	        }else{
+                	        	JOptionPane.showMessageDialog(null, "File was not Received");
+                	        	filereceive.close();
+                	        }
+                		    
             		        
                 			}catch(Exception e){
                 			//do nothing
                 		}
                 		
-                		filereceive.close();
+                		
                 		}else{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 		}
@@ -137,10 +149,4 @@ class serverOut extends Thread{
 class serverIn extends Thread{
 	
 }
-
-
-
-
-
-
 
