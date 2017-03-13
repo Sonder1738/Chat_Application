@@ -84,7 +84,7 @@ public class home{
 		LinkedList templist = serial.deserialize("src/clients.ser");
 		clients = templist;
 		String b = clients.get(index).getId(); // CHANGE TO LOOP
-		System.out.println(b); //prints user login id currently
+		System.out.println(b); //prints user login id currently HERE IS WHER IT PRINTZ USERNAME
 		
 		frame = new JFrame("DERICK CHU FYP");
 		frame.setResizable(false);
@@ -240,7 +240,7 @@ public class home{
 							//Client startClient = new Client();
 							chatFrame chatFrame = new chatFrame();
 							frame.dispose();
-							chatFrame.start(textField.getText(),rdbtnPrivate.isSelected());
+							chatFrame.start(index, textField.getText(),rdbtnPrivate.isSelected());
 							
 						}
 					}

@@ -175,6 +175,7 @@ public class primary{
 						JOptionPane.showMessageDialog(null, "Logged in!","Success!",JOptionPane.INFORMATION_MESSAGE);
 						frame.dispose();
 	    				homeFrame.start(i);
+	    				
 	    				notLoggedIn=false;
 	    				break;
 					}else{

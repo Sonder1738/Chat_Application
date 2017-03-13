@@ -38,6 +38,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.LinkedList;
 
 import javax.swing.JTextArea;
 import java.awt.GridLayout;
@@ -67,12 +68,21 @@ public class chatFrame implements Runnable{
 	
 	private static SecretKeySpec secretKey;
     private static byte[] key;
+    int index;
+    
+    LinkedList<clients> clients= new LinkedList();
+	Serialize serial = new Serialize();
+	
+	
 	/**
 	 * @param b 
 	 * @param string 
 	 * @wbp.parser.entryPoint
 	 */
-	public void start(String string, boolean b) {
+	public void start(int i,String string, boolean b) {
+		index=i;
+		clients =serial.deserialize("src/clients.ser");
+		
 		frame = new JFrame("DERICK CHU FYP");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setSize(434, 404);
@@ -130,10 +140,12 @@ public class chatFrame implements Runnable{
     	    	String myText = textField.getText();
     	    	
     	    	if(b==true){
-    	    		setKey("mypass");
+    	    		//System.out.println(clients.get(index).getPassword());
+    	    		//setKey("mypass");
     	    		System.out.println(encrypt(myText, "mypass2")); //CONTINUE THE ENCRYPTION SHIT!!!
     	    		System.out.println(decrypt(encrypt(myText, "mypass2"), "mypass2"));
 					textField.setText("");
+					
     	    	}else{
     	    		//String myText = textField.getText();
         	    	textArea.append(myText+"\n");
@@ -203,7 +215,7 @@ public class chatFrame implements Runnable{
 					   
 					}catch (Exception e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "File was not sent\n Something happened");
 					}
                 	System.out.println("Done.");	
 				}
