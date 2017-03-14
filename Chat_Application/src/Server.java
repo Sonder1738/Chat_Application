@@ -11,8 +11,11 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.crypto.Cipher;
@@ -40,6 +43,7 @@ public class Server implements Runnable{
 	
 	protected void serverIn() throws Exception
     {
+		
 		try{
 			while (true){
             	System.out.println("Server listening..");
@@ -57,6 +61,11 @@ public class Server implements Runnable{
                 chatFrame cf = new chatFrame();
                 
                 while(true){
+                	
+                	DateFormat df = new SimpleDateFormat("h:mm:ss a");
+                    Date dateobj = new Date();
+                    System.out.println(df.format(dateobj));
+                    
                 	line=input.readLine();
                 	
                 	if(line.equalsIgnoreCase("gbye1738")){
@@ -94,10 +103,10 @@ public class Server implements Runnable{
                 		
                 		}else if(line.contains("==")){ //means decrypted
                 			String decrypted = decrypt(line, "mx6unB3MZNEZOgLiTrLC");
-                			cf.printMsg(client.getInetAddress().getHostAddress()+": "+decrypted);
+                			cf.printMsg(df.format(dateobj)+": "+client.getInetAddress().getHostAddress()+": "+decrypted);
                     		
                 		}else{
-                		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
+                		cf.printMsg(df.format(dateobj)+": "+client.getInetAddress().getHostAddress()+": "+line);
                 		}
                 	
                 	/*

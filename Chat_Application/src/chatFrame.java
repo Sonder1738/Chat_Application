@@ -21,14 +21,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,8 +40,11 @@ import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.JTextArea;
@@ -72,6 +79,7 @@ public class chatFrame implements Runnable{
     
     LinkedList<clients> clients= new LinkedList();
 	Serialize serial = new Serialize();
+	private JButton btnNewButton_2;
 	
 	
 	/**
@@ -132,17 +140,17 @@ public class chatFrame implements Runnable{
     	});
         
         
-        
-        
-        
+
         Action action = new AbstractAction()
     	{
     	    @Override
     	    public void actionPerformed(ActionEvent e)
     	    {
     	    	String myText = textField.getText();
-    	    	
-    	    	if(isPrivate==true){
+    	    	DateFormat df = new SimpleDateFormat("h:mm:ss a");
+                Date dateobj = new Date();
+               
+                if(isPrivate==true){
     	    		//System.out.println(clients.get(index).getPassword());
     	    		//setKey("mypass");
     	    		//System.out.println(encrypt(myText, "mypass2")); //CONTINUE THE ENCRYPTION SHIT!!!
@@ -152,7 +160,7 @@ public class chatFrame implements Runnable{
     	    		
     	    		
     	    		
-        	    	textArea.append(myText+"\n");
+        	    	textArea.append(df.format(dateobj)+": "+myText+"\n");
         	    	textField.setText("");
         	    	
         	    	String encrypted = encrypt(myText, "mx6unB3MZNEZOgLiTrLC"); //enter something longer here
@@ -169,7 +177,7 @@ public class chatFrame implements Runnable{
         	    	
                 	}else{
     	    		//String myText = textField.getText();
-        	    	textArea.append(myText+"\n");
+        	    	textArea.append(df.format(dateobj)+": "+myText+"\n");
         	    	textField.setText("");
         	    	
         	    	Client c = new Client();
@@ -187,15 +195,53 @@ public class chatFrame implements Runnable{
         
         panel_1 = new JPanel();
         GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+        gbc_panel_1.anchor = GridBagConstraints.EAST;
+        gbc_panel_1.fill = GridBagConstraints.VERTICAL;
         gbc_panel_1.insets = new Insets(0, 0, 5, 0);
-        gbc_panel_1.fill = GridBagConstraints.BOTH;
         gbc_panel_1.gridx = 0;
         gbc_panel_1.gridy = 1;
         frame.getContentPane().add(panel_1, gbc_panel_1);
-        panel_1.setLayout(new BorderLayout(0, 0));
+        GridBagLayout gbl_panel_1 = new GridBagLayout();
+        gbl_panel_1.columnWidths = new int[]{89, 75, 0};
+        gbl_panel_1.rowHeights = new int[]{41, 0};
+        gbl_panel_1.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+        gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        panel_1.setLayout(gbl_panel_1);
+        
+        btnNewButton_2 = new JButton("Save Chat");
+        btnNewButton_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		//save chat here
+        		DateFormat df = new SimpleDateFormat("dd-MMM-YYYY");
+                Date dateobj = new Date();
+                String date = df.format(dateobj);
+                
+                try{
+                	File log = new File(df.format(dateobj)+".txt") ;
+                	FileWriter fw = new FileWriter(log.getAbsoluteFile(), true);
+                	textArea.write(fw);
+                	fw.close();
+                	JOptionPane.showMessageDialog(null, df.format(dateobj)+".txt saved!");
+				}catch (Exception e){
+					System.out.println(e);
+				}
+             }
+        });
+        GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
+        gbc_btnNewButton_2.fill = GridBagConstraints.VERTICAL;
+        gbc_btnNewButton_2.anchor = GridBagConstraints.WEST;
+        gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
+        gbc_btnNewButton_2.gridx = 0;
+        gbc_btnNewButton_2.gridy = 0;
+        panel_1.add(btnNewButton_2, gbc_btnNewButton_2);
         
         btnNewButton = new JButton("Send File");
-        panel_1.add(btnNewButton, BorderLayout.EAST);
+        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+        gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
+        gbc_btnNewButton.anchor = GridBagConstraints.WEST;
+        gbc_btnNewButton.gridx = 1;
+        gbc_btnNewButton.gridy = 0;
+        panel_1.add(btnNewButton, gbc_btnNewButton);
         btnNewButton.addActionListener(new ActionListener() {
         	
         	Client c = new Client();
