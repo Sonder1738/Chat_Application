@@ -10,8 +10,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Scanner;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -30,13 +35,13 @@ public class Server implements Runnable{
 	Socket filesend;
 	int portFileIn = 15679;
 	
-	
+	private static SecretKeySpec secretKey;
+    private static byte[] key;
 	
 	protected void serverIn() throws Exception
     {
-		try
-        {
-            while (true){
+		try{
+			while (true){
             	System.out.println("Server listening..");
             	if(isRunning!=true){
             	ssock = new ServerSocket(portIn);
@@ -59,7 +64,7 @@ public class Server implements Runnable{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+disconnectline);
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
-                	}else if(line.equalsIgnoreCase("fsendnow")){
+                		}else if(line.equalsIgnoreCase("fsendnow")){
                 		
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();
@@ -81,14 +86,16 @@ public class Server implements Runnable{
                 	        }else{
                 	        	JOptionPane.showMessageDialog(null, "File was not Received");
                 	        	filereceive.close();
-                	        }
-                		    
-            		        
-                			}catch(Exception e){
+                	        	}
+                		 	}catch(Exception e){
                 			//do nothing
                 		}
                 		
                 		
+                		}else if(line.contains("==")){ //means decrypted
+                			String decrypted = decrypt(line, "mx6unB3MZNEZOgLiTrLC");
+                			cf.printMsg(client.getInetAddress().getHostAddress()+": "+decrypted);
+                    		
                 		}else{
                 		cf.printMsg(client.getInetAddress().getHostAddress()+": "+line);
                 		}
@@ -106,8 +113,10 @@ public class Server implements Runnable{
                 	
                   }
                
-            }
-        }
+            
+			}
+			
+		}
         catch(IOException e)
         {
             System.out.println(e);
@@ -137,11 +146,56 @@ public void start() { //doesnt get called??
 	      }
 		
 	}
+//////////////////////////////////////ENCRYPT STUFF//////////////////////////////////////////
+public static void setKey(String myKey) 
+{
+    MessageDigest sha = null;
+    try {
+        key = myKey.getBytes("UTF-8");
+        sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16); 
+        secretKey = new SecretKeySpec(key, "AES");
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+public static String encrypt(String strToEncrypt, String secret) 
+{
+    try
+    {
+        setKey(secret);
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+    } 
+    catch (Exception e) 
+    {
+        System.out.println("Error while encrypting: " + e.toString());
+    }
+    return null;
+}
+
+public static String decrypt(String strToDecrypt, String secret) 
+{
+    try
+    {
+        setKey(secret);
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+    } 
+    catch (Exception e) 
+    {
+        System.out.println("Error while decrypting: " + e.toString());
+    }
+    return null;
+}
+		
+//////////////////////////////////////ENCRYPT STUFF//////////////////////////////////////////	
 
 
-	
-		
-		
 }
 class serverOut extends Thread{
 	

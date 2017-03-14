@@ -27,6 +27,7 @@ class Client implements Runnable{
 	boolean priv;
 	String message;
 	
+	
 	public String getMessage() {
 		return message;
 	}
@@ -93,8 +94,6 @@ class Client implements Runnable{
 		Client.fileSendSocket = fileSendSocket;
 	}
 	
-	
-	
 	public void start(String string, boolean b) {
 		this.ip=string;
 		this.priv=b;
@@ -115,6 +114,7 @@ class Client implements Runnable{
 		fileSendSocket = new Socket(ip, port);
 		System.out.println("sending file to "+fileSendSocket.getInetAddress().getHostAddress());
 	}
+	
 	
 }
 

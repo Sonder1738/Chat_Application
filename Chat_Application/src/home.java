@@ -228,9 +228,6 @@ public class home{
 				
 				btnChat.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
-						System.out.println(rdbtnPrivate.isSelected());
-						System.out.println(textField.getText());
-						
 						if(textField.getText().isEmpty()){
 							JOptionPane.showMessageDialog(frame,
 								    "Field cannot be empty",
@@ -240,7 +237,12 @@ public class home{
 							//Client startClient = new Client();
 							chatFrame chatFrame = new chatFrame();
 							frame.dispose();
-							chatFrame.start(index, textField.getText(),rdbtnPrivate.isSelected());
+							try {
+								chatFrame.start(index, textField.getText(),rdbtnPrivate.isSelected());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							
 						}
 					}

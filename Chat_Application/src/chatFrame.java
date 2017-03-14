@@ -77,11 +77,15 @@ public class chatFrame implements Runnable{
 	/**
 	 * @param b 
 	 * @param string 
+	 * @throws Exception 
 	 * @wbp.parser.entryPoint
 	 */
-	public void start(int i,String string, boolean b) {
-		index=i;
-		clients =serial.deserialize("src/clients.ser");
+	public void start(int i,String string, boolean isPrivate) throws Exception {
+		if(isPrivate ==true){
+			JOptionPane.showMessageDialog(null, "This chat session is encrypted with AES");
+		}else{
+			JOptionPane.showMessageDialog(null, "This chat session is unsecured");
+		}
 		
 		frame = new JFrame("DERICK CHU FYP");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -118,8 +122,7 @@ public class chatFrame implements Runnable{
     	            try {
     	            	c.setMessage("gbye1738");
     	            	c.msgOut();
-						System.out.println("bye"); //del
-					} catch (Exception e) {
+    	            	}catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -139,14 +142,32 @@ public class chatFrame implements Runnable{
     	    {
     	    	String myText = textField.getText();
     	    	
-    	    	if(b==true){
+    	    	if(isPrivate==true){
     	    		//System.out.println(clients.get(index).getPassword());
     	    		//setKey("mypass");
-    	    		System.out.println(encrypt(myText, "mypass2")); //CONTINUE THE ENCRYPTION SHIT!!!
-    	    		System.out.println(decrypt(encrypt(myText, "mypass2"), "mypass2"));
-					textField.setText("");
-					
-    	    	}else{
+    	    		//System.out.println(encrypt(myText, "mypass2")); //CONTINUE THE ENCRYPTION SHIT!!!
+    	    		//System.out.println(decrypt(encrypt(myText, "mypass2"), "mypass2"));
+					//textField.setText("");
+    	    		//String myText = textField.getText();
+    	    		
+    	    		
+    	    		
+        	    	textArea.append(myText+"\n");
+        	    	textField.setText("");
+        	    	
+        	    	String encrypted = encrypt(myText, "mx6unB3MZNEZOgLiTrLC"); //enter something longer here
+        	    	
+        	    	Client c = new Client();
+        	    	c.setMessage(encrypted);
+        	    	try {
+    					Thread.sleep(200);
+    					c.msgOut();
+    					autoScroll.setValue(autoScroll.getMaximum());
+    				} catch (Exception b){
+    				}
+        	    	
+        	    	
+                	}else{
     	    		//String myText = textField.getText();
         	    	textArea.append(myText+"\n");
         	    	textField.setText("");
@@ -251,8 +272,17 @@ public class chatFrame implements Runnable{
         
         	
         Client startCon = new Client(); //starts the client and send the IP and boolean private over
-        startCon.start(string, b);
-		//startCon.clientIn(string, b);
+        //GETS THE KEY FIRST BEFORE ESTABLISHING CHAT CONNECTION
+        if(isPrivate==true){
+        	int port =15680;
+        	
+        	startCon.start(string, isPrivate);
+        	
+        	
+        }else{
+        	startCon.start(string, isPrivate);
+        }
+        
 	}
 
 	public class textListener implements ActionListener{
