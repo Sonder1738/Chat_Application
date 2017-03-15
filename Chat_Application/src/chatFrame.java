@@ -128,6 +128,8 @@ public class chatFrame implements Runnable{
     	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
     	        	
     	            try {
+    	            	home h = new home();
+    	            	h.getFrame().setEnabled(true); //re-enable it
     	            	c.setMessage("gbye1738");
     	            	c.msgOut();
     	            	}catch (Exception e) {

@@ -31,17 +31,20 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import java.awt.GridLayout;
 import javax.swing.JOptionPane;
+import java.awt.CardLayout;
 public class home{
 
 	
 	DefaultTableModel dtm = new DefaultTableModel(0, 0);
-	private JFrame frame;
+	private static JFrame frame;
 	int index;
 	public JTable table;
 	private InetAddress bla;
@@ -199,6 +202,9 @@ public class home{
         		JTextField textField;
         		
         		JFrame frame = new JFrame();
+        		frame.setAlwaysOnTop(true);
+        		getFrame().setEnabled(false);
+        		
 				frame.setVisible(true);
 				frame.setResizable(false);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -208,6 +214,14 @@ public class home{
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				frame.setContentPane(contentPane);
 				contentPane.setLayout(null);
+				
+				frame.addWindowListener(new WindowAdapter()
+				{
+				    public void windowClosing(WindowEvent e)
+				    {
+				    	getFrame().setEnabled(true);
+				    }
+				});
 				
 				textField = new JTextField();
 				textField.setBounds(10, 36, 178, 20);
@@ -239,6 +253,7 @@ public class home{
 							frame.dispose();
 							try {
 								chatFrame.start(index, textField.getText(),rdbtnPrivate.isSelected());
+								getFrame().setEnabled(false);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -273,16 +288,12 @@ public class home{
         panel_1.add(lblConnectedUsers);
         
         JPanel panel_2 = new JPanel();
-        panel_2.setBounds(607, 0, 99, 541);
+        panel_2.setBounds(221, 0, 573, 541);
         frame.getContentPane().add(panel_2);
+        panel_2.setLayout(new CardLayout(0, 0));
         
-        JButton btnNewButton = new JButton("New button"); //test button
-        btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		dtm.addRow(new Object[] {"HI"});
-        	}
-        });
-        panel_2.add(btnNewButton);
+        JPanel panel_4 = new JPanel();
+        panel_2.add(panel_4, "name_129433072628753");
         
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
@@ -319,6 +330,12 @@ public class home{
 
 
 	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+
+
 	public class homePane extends JPanel{
 		public homePane(){
 		}
