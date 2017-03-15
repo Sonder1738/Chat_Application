@@ -1,50 +1,19 @@
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JToolBar;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
-import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import com.jgoodies.forms.factories.FormFactory;
-import javax.swing.JList;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
-import javax.swing.Box;
-import java.awt.Color;
-import javax.swing.UIManager;
+
 
 
 public class primary{
@@ -75,18 +44,17 @@ public class primary{
 			//isNull=true; //use this or delete
     		JOptionPane.showMessageDialog(null, "Welcome to the Chat Client!");
     		JOptionPane.showMessageDialog(null, "Please Register For first time use!");
+    		
     		login.setEnabled(false);
 			//do nothing
 			}else{
-			
+				
 				clients=tempList;
+				serial.serialize(clients, "src/clients.ser");
 		//do nothing
 		//isNull=false; //use this or delete
 		}
     	
-    	
-    	clients=tempList;
-		
 		//printeverything();
 		
 		frame = new JFrame("DERICK CHU FYP");
