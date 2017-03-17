@@ -59,7 +59,7 @@ public class Server implements Runnable{
                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String line;
                 chatFrame cf = new chatFrame();
-                cf.printMsg(client.getInetAddress().getHostAddress() +" Connected");
+                cf.printMsg(client.getInetAddress().getHostAddress() +" has connected");
                 while(true){
                 	
                 	DateFormat df = new SimpleDateFormat("h:mm:ss a");
