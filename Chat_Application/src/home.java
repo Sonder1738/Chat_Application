@@ -198,8 +198,10 @@ public class home{
         		//c.start();
         		//chatFrame cf = new chatFrame();
         		//cf.start();
+        		
         		JPanel contentPane;
         		JTextField textField;
+        		JTextField textField_1;
         		
         		JFrame frame = new JFrame();
         		frame.setAlwaysOnTop(true);
@@ -208,7 +210,7 @@ public class home{
 				frame.setVisible(true);
 				frame.setResizable(false);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				frame.setBounds(100, 100, 297, 123);
+				frame.setBounds(100, 100, 297, 177);
 				frame.setLocationRelativeTo(null);
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -233,18 +235,27 @@ public class home{
 				contentPane.add(lblIpAddress);
 				
 				JButton btnChat = new JButton("Chat!");
-				btnChat.setBounds(191, 35, 89, 23);
+				btnChat.setBounds(192, 36, 89, 78);
 				contentPane.add(btnChat);
 				
-				JRadioButton rdbtnPrivate = new JRadioButton("Private");
-				rdbtnPrivate.setBounds(10, 63, 109, 23);
+				JRadioButton rdbtnPrivate = new JRadioButton("Private Chat");
+				rdbtnPrivate.setBounds(10, 119, 122, 23);
 				contentPane.add(rdbtnPrivate);
+				
+				textField_1 = new JTextField();
+				textField_1.setBounds(10, 92, 178, 20);
+				contentPane.add(textField_1);
+				textField_1.setColumns(10);
+				
+				JLabel lblNewLabel = new JLabel("Enter a friendly name");
+				lblNewLabel.setBounds(10, 67, 146, 14);
+				contentPane.add(lblNewLabel);
 				
 				btnChat.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
-						if(textField.getText().isEmpty()){
+						if(textField.getText().isEmpty() || textField_1.getText().isEmpty()){
 							JOptionPane.showMessageDialog(frame,
-								    "Field cannot be empty",
+								    "Fields cannot be empty",
 								    "Warning",
 								    JOptionPane.WARNING_MESSAGE);
 						}else{
@@ -252,7 +263,7 @@ public class home{
 							chatFrame chatFrame = new chatFrame();
 							frame.dispose();
 							try {
-								chatFrame.start(index, textField.getText(),rdbtnPrivate.isSelected());
+								chatFrame.start(textField_1.getText(), textField.getText(),rdbtnPrivate.isSelected());
 								getFrame().setEnabled(false);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block

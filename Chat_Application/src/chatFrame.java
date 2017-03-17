@@ -67,7 +67,7 @@ import javax.swing.JProgressBar;
 /*TO DO LIST
 FIX CHATFRAME BAR CENTERING, MAKE IT DYNAMICALLY UPDATE SIZE
 ADD NAMES MAYBE?
-ADD NOTICE WHEN SENDING FILE
+ADD NOTICE WHEN SENDING FILE --
 MAYBE ADD ...is typing?
 SCROLL TO BOTTOM WHEN USER RECEIVE A MESSAGE --
 */
@@ -85,7 +85,6 @@ public class chatFrame implements Runnable{
 	
 	private static SecretKeySpec secretKey;
     private static byte[] key;
-    int index;
     
     LinkedList<clients> clients= new LinkedList();
 	Serialize serial = new Serialize();
@@ -99,7 +98,7 @@ public class chatFrame implements Runnable{
 	 * @throws Exception 
 	 * @wbp.parser.entryPoint
 	 */
-	public void start(int i,String string, boolean isPrivate) throws Exception {
+	public void start(String friendlyName,String string, boolean isPrivate) throws Exception {
 		if(isPrivate ==true){
 			JOptionPane.showMessageDialog(null, "This chat session is encrypted with AES");
 		}else{
@@ -173,13 +172,13 @@ public class chatFrame implements Runnable{
     	    		
     	    		
     	    		
-        	    	textArea.append(df.format(dateobj)+": "+myText+"\n");
+        	    	textArea.append(df.format(dateobj)+friendlyName+": "+myText+"\n");
         	    	textField.setText("");
         	    	
         	    	String encrypted = encrypt(myText, "mx6unB3MZNEZOgLiTrLC"); //enter something longer here
         	    	
         	    	Client c = new Client();
-        	    	c.setMessage(encrypted);
+        	    	c.setMessage(friendlyName+": "+encrypted);
         	    	try {
     					Thread.sleep(200);
     					c.msgOut();
@@ -190,11 +189,11 @@ public class chatFrame implements Runnable{
         	    	
                 	}else{
     	    		//String myText = textField.getText();
-        	    	textArea.append(df.format(dateobj)+": "+myText+"\n");
+        	    	textArea.append(df.format(dateobj)+" "+friendlyName+": "+myText+"\n");
         	    	textField.setText("");
         	    	
         	    	Client c = new Client();
-        	    	c.setMessage(myText);
+        	    	c.setMessage(friendlyName+": "+myText);
         	    	try {
     					Thread.sleep(200);
     					c.msgOut();
@@ -241,8 +240,7 @@ public class chatFrame implements Runnable{
              }
         });
         GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-        gbc_btnNewButton_2.fill = GridBagConstraints.VERTICAL;
-        gbc_btnNewButton_2.anchor = GridBagConstraints.WEST;
+        gbc_btnNewButton_2.fill = GridBagConstraints.BOTH;
         gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
         gbc_btnNewButton_2.gridx = 0;
         gbc_btnNewButton_2.gridy = 0;
@@ -250,8 +248,7 @@ public class chatFrame implements Runnable{
         
         btnNewButton = new JButton("Send File");
         GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-        gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
-        gbc_btnNewButton.anchor = GridBagConstraints.WEST;
+        gbc_btnNewButton.fill = GridBagConstraints.BOTH;
         gbc_btnNewButton.gridx = 1;
         gbc_btnNewButton.gridy = 0;
         panel_1.add(btnNewButton, gbc_btnNewButton);
@@ -306,28 +303,19 @@ public class chatFrame implements Runnable{
         
         JPanel panel = new JPanel();
         GridBagConstraints gbc_panel = new GridBagConstraints();
-        gbc_panel.fill = GridBagConstraints.VERTICAL;
+        gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.gridx = 0;
         gbc_panel.gridy = 2;
         frame.getContentPane().add(panel, gbc_panel);
-        GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[]{414, 0};
-        gbl_panel.rowHeights = new int[]{21, 0};
-        gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-        gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        panel.setLayout(gbl_panel);
         
         
         
         textField = new JTextField();
         
         textField.addActionListener(action);
+        panel.setLayout(new BorderLayout(0, 0));
         textField.setEditable(true);
-        GridBagConstraints gbc_textField = new GridBagConstraints();
-        gbc_textField.fill = GridBagConstraints.BOTH;
-        gbc_textField.gridx = 0;
-        gbc_textField.gridy = 0;
-        panel.add(textField, gbc_textField);
+        panel.add(textField);
         textField.setColumns(50);
         frame.setVisible(true);
         
@@ -366,7 +354,6 @@ public class chatFrame implements Runnable{
     }
 
 	public void printMsg(String line) throws InterruptedException {
-		Thread.sleep(2000);
 		
 		textArea.append(line+"\n"); //message from server INSTEAD
 		autoScroll.setValue(autoScroll.getMaximum());
@@ -421,8 +408,7 @@ public class chatFrame implements Runnable{
         }
         return null;
     }
-	
-	
+
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ENCRYPTION@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	  
 
 
