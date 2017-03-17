@@ -53,13 +53,13 @@ public class Server implements Runnable{
             	}
             	
                 client = ssock.accept();
-                System.out.println(client.getInetAddress().getHostAddress() +" connected ");
+                System.out.println(client.getInetAddress().getHostAddress() +" connected");
                 
                 PrintWriter out = new PrintWriter(client.getOutputStream(),true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String line;
                 chatFrame cf = new chatFrame();
-                
+                cf.printMsg(client.getInetAddress().getHostAddress() +" Connected");
                 while(true){
                 	
                 	DateFormat df = new SimpleDateFormat("h:mm:ss a");
