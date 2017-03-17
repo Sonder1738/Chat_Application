@@ -65,8 +65,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JProgressBar;
 
 /*TO DO LIST
-FIX CHATFRAME BAR CENTERING, MAKE IT DYNAMICALLY UPDATE SIZE
-ADD NAMES MAYBE?
+FIX CHATFRAME BAR CENTERING, MAKE IT DYNAMICALLY UPDATE SIZE --
+ADD NAMES MAYBE? --
 ADD NOTICE WHEN SENDING FILE --
 MAYBE ADD ...is typing?
 SCROLL TO BOTTOM WHEN USER RECEIVE A MESSAGE --
@@ -172,7 +172,7 @@ public class chatFrame implements Runnable{
     	    		
     	    		
     	    		
-        	    	textArea.append(df.format(dateobj)+friendlyName+": "+myText+"\n");
+        	    	textArea.append(df.format(dateobj)+"    "+friendlyName+": "+myText+"\n");
         	    	textField.setText("");
         	    	
         	    	String encrypted = encrypt(myText, "mx6unB3MZNEZOgLiTrLC"); //enter something longer here
@@ -189,7 +189,7 @@ public class chatFrame implements Runnable{
         	    	
                 	}else{
     	    		//String myText = textField.getText();
-        	    	textArea.append(df.format(dateobj)+" "+friendlyName+": "+myText+"\n");
+        	    	textArea.append(df.format(dateobj)+"    "+friendlyName+": "+myText+"\n");
         	    	textField.setText("");
         	    	
         	    	Client c = new Client();
@@ -356,7 +356,11 @@ public class chatFrame implements Runnable{
 	public void printMsg(String line) throws InterruptedException {
 		
 		textArea.append(line+"\n"); //message from server INSTEAD
-		autoScroll.setValue(autoScroll.getMaximum());
+		try{
+			autoScroll.setValue(autoScroll.getMaximum());
+		}catch(Exception e){
+			System.out.println("Wut");
+		}
 	}
 
 	

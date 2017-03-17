@@ -103,10 +103,10 @@ public class Server implements Runnable{
                 		
                 		}else if(line.contains("==")){ //means decrypted
                 			String decrypted = decrypt(line, "mx6unB3MZNEZOgLiTrLC");
-                			cf.printMsg(df.format(dateobj)+" "+decrypted);
+                			cf.printMsg(df.format(dateobj)+"    "+decrypted);
                     		
                 		}else{
-                		cf.printMsg(df.format(dateobj)+" "+line);
+                		cf.printMsg(df.format(dateobj)+"    "+line);
                 		}
                 	
                 	/*
