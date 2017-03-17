@@ -64,6 +64,16 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JProgressBar;
 
+/*TO DO LIST
+FIX CHATFRAME BAR CENTERING, MAKE IT DYNAMICALLY UPDATE SIZE
+ADD NAMES MAYBE?
+ADD NOTICE WHEN SENDING FILE
+MAYBE ADD ...is typing?
+SCROLL TO BOTTOM WHEN USER RECEIVE A MESSAGE --
+*/
+
+
+
 
 public class chatFrame implements Runnable{
 
@@ -81,6 +91,7 @@ public class chatFrame implements Runnable{
 	Serialize serial = new Serialize();
 	private JButton btnNewButton_2;
 	
+	static JScrollBar autoScroll;
 	
 	/**
 	 * @param b 
@@ -116,7 +127,7 @@ public class chatFrame implements Runnable{
         gbc_scrollPane.gridy = 0;
         frame.getContentPane().add(scrollPane, gbc_scrollPane);
         
-        JScrollBar autoScroll = scrollPane.getVerticalScrollBar(); //autoscroll to bottom
+        autoScroll = scrollPane.getVerticalScrollBar(); //autoscroll to bottom
         
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
     	    @Override
@@ -277,11 +288,13 @@ public class chatFrame implements Runnable{
 						
 						
 						BufferedOutputStream out = new BufferedOutputStream(c.getFileSendSocket().getOutputStream());
+						JOptionPane.showMessageDialog(null, "Sending..");
 						try (DataOutputStream d = new DataOutputStream(out)) {
 						    d.writeUTF(chooser.getSelectedFile().getName());
 						    Files.copy(chooser.getSelectedFile().toPath(), d);
+						    JOptionPane.showMessageDialog(null, "Sent!");
 						}
-					   
+						
 					}catch (Exception e) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "File was not sent\n Something happened");
@@ -352,8 +365,11 @@ public class chatFrame implements Runnable{
         return frame;
     }
 
-	public void printMsg(String line) {
+	public void printMsg(String line) throws InterruptedException {
+		Thread.sleep(2000);
+		
 		textArea.append(line+"\n"); //message from server INSTEAD
+		autoScroll.setValue(autoScroll.getMaximum());
 	}
 
 	
