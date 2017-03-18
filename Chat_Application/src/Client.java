@@ -40,7 +40,13 @@ class Client implements Runnable{
 			MyClient = new Socket(ipOut, portOut);
 			
 			System.out.println("Connected to "+MyClient.getInetAddress().getHostAddress());
-			
+
+			home hf = new home();
+			hf.getDisconnect().setEnabled(true);
+			hf.getSaveChat().setEnabled(true);
+			hf.getSendFile().setEnabled(true);
+			hf.getBtnConnect().setEnabled(false);
+			hf.getChatBox().setEnabled(true);
 			//BufferedReader stdin=new BufferedReader(new InputStreamReader(System.in));
 			//String s;
 			
@@ -64,18 +70,16 @@ class Client implements Runnable{
 	public void run(){
 		try {
 			clientIn(ip,priv);
-		} catch (IOException e) {
+		}catch (IOException e){
+			home hf = new home();
+			hf.getFrame().setAlwaysOnTop(false);
 			Component frame = null;
 			JOptionPane.showMessageDialog(frame,
 				    "Unable to connect to "+ip,
 				    "",
 				    JOptionPane.PLAIN_MESSAGE);
-			
-			chatFrame cf = new chatFrame();
-			home hf = new home();
-			cf.getMainFrame().dispose();
-			hf.getFrame().setEnabled(true);
-		}
+			hf.getBtnConnect().setEnabled(true);
+			}
 		}
 	
 	
@@ -100,7 +104,9 @@ class Client implements Runnable{
 		this.ip=string;
 		this.priv=b;
 		System.out.println("Connecting..");
-	      if (t == null) {
+		
+		
+	      if(t == null) {
 	         t = new Thread (this, "svr thrd");
 	         t.start ();
 	      }

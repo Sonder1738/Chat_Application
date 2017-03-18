@@ -87,11 +87,13 @@ public class home{
 	JTextField ip;
 	String friendlyName;
 	
-	JTextField chatBox;
-	private JButton sendFile;
-	private JButton saveChat;
-	private JButton disconnect;
+	static private JTextField chatBox;
+	static private JButton sendFile;
+	static private JButton saveChat;
+	static private JButton disconnect;
+	static private JButton btnConnect;
 	
+
 	boolean isPrivate;
 	private JPanel panel_5;
 	/**
@@ -231,7 +233,7 @@ public class home{
         
         
         
-        JButton btnConnect = new JButton("Connect");
+        btnConnect = new JButton("Connect");
         btnConnect.setBounds(0, 518, 208, 23);
         panel.add(btnConnect);
         btnConnect.addActionListener(new ActionListener() {
@@ -309,6 +311,10 @@ public class home{
 							getFrame().setEnabled(true);
 							getFrame().setAlwaysOnTop(true);
 							btnConnect.setEnabled(false);
+							chatBox.setEnabled(false);
+				    	    sendFile.setEnabled(false);
+				    	    saveChat.setEnabled(false);
+				    	    disconnect.setEnabled(false);
 							try {
 								//chatFrame.start(textField_1.getText(), textField.getText(),rdbtnPrivate.isSelected());
 								//getFrame().setEnabled(false);
@@ -319,16 +325,9 @@ public class home{
 						        	int port =15680;
 						        	startCon.start(ip.getText(), rdbtnPrivate.isSelected());
 						        	
-						        	chatBox.setEnabled(true);
-						    	    sendFile.setEnabled(true);
-						    	    saveChat.setEnabled(true);
-						    	    disconnect.setEnabled(true);
 						        }else{
 						        	startCon.start(ip.getText(), rdbtnPrivate.isSelected());
-						        	chatBox.setEnabled(true);
-						    	    sendFile.setEnabled(true);
-						    	    saveChat.setEnabled(true);
-						    	    disconnect.setEnabled(true);
+						        	
 						        }
 						        isPrivate = rdbtnPrivate.isSelected();
 							} catch (Exception e) {
@@ -769,6 +768,23 @@ public class home{
 
 
 	
+	public JTextField getChatBox() {
+		return chatBox;
+	}
+	public JButton getDisconnect() {
+		return disconnect;
+	}
+	public JButton getBtnConnect() {
+		return btnConnect;
+	}
+	public JButton getSendFile() {
+		return sendFile;
+	}
+	public JButton getSaveChat() {
+		return saveChat;
+	}
+
+
 	public JFrame getFrame() {
 		return frame;
 	}
