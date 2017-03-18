@@ -236,7 +236,7 @@ public class home{
         panel.add(btnConnect);
         btnConnect.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		getFrame().setEnabled(false);
+        		getFrame().setEnabled(false); //sets the background frame false
 				//Client c = new Client();
         		//c.start();
         		//chatFrame cf = new chatFrame();
@@ -246,7 +246,6 @@ public class home{
         		
         		
         		JFrame frame = new JFrame();
-        		frame.setAlwaysOnTop(true);
         		//getFrame().setEnabled(false);
         		
 				frame.setVisible(true);
@@ -296,6 +295,7 @@ public class home{
 				
 				btnChat.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent arg0) {
+						
 						if(ip.getText().isEmpty() || friendlyNameField.getText().isEmpty()){
 							JOptionPane.showMessageDialog(frame,
 								    "Fields cannot be empty",
@@ -415,17 +415,18 @@ public class home{
         saveChat = new JButton("Save Chat");
         saveChat.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
+        		getFrame().setAlwaysOnTop(false);
         		//save chat here
         		DateFormat df = new SimpleDateFormat("dd-MMM-YYYY");
                 Date dateobj = new Date();
                 String date = df.format(dateobj);
                 
                 try{
-                	File log = new File(df.format(dateobj)+".txt") ;
+                	File log = new File(df.format(dateobj)+" "+ip.getText()+".txt") ;
                 	FileWriter fw = new FileWriter(log.getAbsoluteFile(), true);
                 	textArea.write(fw);
                 	fw.close();
-                	JOptionPane.showMessageDialog(null, df.format(dateobj)+".txt saved!");
+                	JOptionPane.showMessageDialog(null, df.format(dateobj)+" "+ip.getText()+".txt saved!");
 				}catch (Exception e){
 					System.out.println(e);
 				}
@@ -435,6 +436,7 @@ public class home{
         disconnect = new JButton("Disconnect");
         disconnect.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
+        		getFrame().setAlwaysOnTop(false);
         		Client c = new Client();
         		c.setMessage("gbye1738");
         		
@@ -558,12 +560,10 @@ public class home{
         panel_4.add(chatBox);
         chatBox.setColumns(50);
         sendFile.addActionListener(new ActionListener() {
-        	
         	Client c = new Client();
         	
-        	
-        	
         	public void actionPerformed(ActionEvent arg0) {
+        		getFrame().setAlwaysOnTop(false);
         		JFileChooser chooser = new JFileChooser();
                 FileNameExtensionFilter images = new FileNameExtensionFilter(
                     "Images", "jpg", "gif","png");
