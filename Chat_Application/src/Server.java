@@ -67,13 +67,12 @@ public class Server implements Runnable{
                     System.out.println(df.format(dateobj));
                     
                 	line=input.readLine();
-                	System.out.println(line);
                 	if(line.equalsIgnoreCase("gbye1738")){
                 		String disconnectline=" has disconnected";
                 		cf.printMsg(client.getInetAddress().getHostAddress()+disconnectline);
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
-                		}else if(line.equalsIgnoreCase("fsendnow")){
+                		}else if(line.equalsIgnoreCase("±")){
                 		home hf = new home();
                 		hf.getFrame().setAlwaysOnTop(false);
                 		filereceive = new ServerSocket(portFileIn);
@@ -103,7 +102,7 @@ public class Server implements Runnable{
                 		}
                 		
                 		
-                		}else if(line.contains("=") || line.contains("/")){ //means decrypted
+                		}else if(line.substring(0, 1).matches("ƒ")){ //means decrypted
                 			/*BufferedInputStream in = new BufferedInputStream(client.getInputStream());
                     		try (DataInputStream d = new DataInputStream(in)) {
                     			
@@ -113,7 +112,7 @@ public class Server implements Runnable{
                     			
                     		}
                     		*/
-                			String decrypted = decrypt(line, "mx6unB3MZNEZOgLiTrLC");
+                			String decrypted = decrypt(line.substring(1), "mx6unB3MZNEZOgLiTrLC");
                 			cf.printMsg(df.format(dateobj)+"    "+decrypted);
                 			
                 		}else{
@@ -193,10 +192,7 @@ public static String decrypt(String strToDecrypt, String secret)
     } 
     catch (Exception e) 
     {
-    	if(strToDecrypt.contains("=")||strToDecrypt.contains("/")){
-    		return strToDecrypt;
-    	}
-        System.out.println("Error while decrypting: " + e.toString());
+    	System.out.println("Error while decrypting: " + e.toString());
     }
     return null;
 }

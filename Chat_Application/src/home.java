@@ -520,7 +520,7 @@ public class home{
         	    	String encrypted = encrypt(friendlyName+": "+myText, "mx6unB3MZNEZOgLiTrLC"); //enter something longer here
         	    	
         	    	Client c = new Client();
-        	    	c.setMessage(encrypted);
+        	    	c.setMessage("ƒ"+encrypted);
         	    	
         	    	try {
         	    		
@@ -583,7 +583,7 @@ public class home{
 					try {
 						int port =15679;
 						
-						c.setMessage("fsendnow");
+						c.setMessage("±");
 						c.msgOut();
 						c.sendFile(port);
 						
