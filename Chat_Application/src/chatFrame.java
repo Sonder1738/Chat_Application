@@ -179,7 +179,7 @@ public class chatFrame implements Runnable{
         	    	String encrypted = encrypt(myText, "mx6unB3MZNEZOgLiTrLC"); //enter something longer here
         	    	
         	    	Client c = new Client();
-        	    	c.setMessage(friendlyName+": "+encrypted);
+        	    	c.setMessage(encrypted);
         	    	try {
     					Thread.sleep(200);
     					c.msgOut();
