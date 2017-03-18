@@ -67,14 +67,15 @@ public class Server implements Runnable{
                     System.out.println(df.format(dateobj));
                     
                 	line=input.readLine();
-                	
+                	System.out.println(line);
                 	if(line.equalsIgnoreCase("gbye1738")){
                 		String disconnectline=" has disconnected";
                 		cf.printMsg(client.getInetAddress().getHostAddress()+disconnectline);
                 		System.out.println(client.getInetAddress().getHostName()+" disconnected");
                 		break;
                 		}else if(line.equalsIgnoreCase("fsendnow")){
-                		
+                		home hf = new home();
+                		hf.getFrame().setAlwaysOnTop(false);
                 		filereceive = new ServerSocket(portFileIn);
                         filesend = filereceive.accept();
                         
@@ -91,17 +92,18 @@ public class Server implements Runnable{
                 	          Files.copy(d, Paths.get(fileName));//specify path here under .get
                 	          JOptionPane.showMessageDialog(null, "File Received");
                 	          filereceive.close();
-                	          
+                	          hf.getFrame().setAlwaysOnTop(true);
                 	        }else{
                 	        	JOptionPane.showMessageDialog(null, "File was not Received");
                 	        	filereceive.close();
+                	        	hf.getFrame().setAlwaysOnTop(true);
                 	        	}
                 		 	}catch(Exception e){
                 			//do nothing
                 		}
                 		
                 		
-                		}else if(line.contains("==")){ //means decrypted
+                		}else if(line.contains("=") || line.contains("/")){ //means decrypted
                 			/*BufferedInputStream in = new BufferedInputStream(client.getInputStream());
                     		try (DataInputStream d = new DataInputStream(in)) {
                     			
@@ -185,12 +187,15 @@ public static String decrypt(String strToDecrypt, String secret)
     try
     {
         setKey(secret);
-        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+        Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
     } 
     catch (Exception e) 
     {
+    	if(strToDecrypt.contains("=")||strToDecrypt.contains("/")){
+    		return strToDecrypt;
+    	}
         System.out.println("Error while decrypting: " + e.toString());
     }
     return null;
