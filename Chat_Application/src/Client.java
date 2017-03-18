@@ -72,7 +72,9 @@ class Client implements Runnable{
 				    JOptionPane.PLAIN_MESSAGE);
 			
 			chatFrame cf = new chatFrame();
+			home hf = new home();
 			cf.getMainFrame().dispose();
+			hf.getFrame().setEnabled(true);
 		}
 		}
 	

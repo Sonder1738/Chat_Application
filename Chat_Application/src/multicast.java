@@ -57,7 +57,6 @@ public class multicast implements Runnable{
 		                // Receive the information and print it.
 		            	duplicate=false;
 		                DatagramPacket msgPacket = new DatagramPacket(buf, buf.length);
-		                
 		                InetAddress localip = InetAddress.getLocalHost();
 		                clientSocket.receive(msgPacket);
 		                //String msg = new String(buf, 0, buf.length); //gets the entire buffer length..so NOPE
