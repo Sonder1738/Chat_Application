@@ -4,6 +4,10 @@ import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.JTextField;
 import java.util.LinkedList;
 import javax.swing.JPanel;
@@ -166,6 +170,13 @@ public class primary{
 				
 			
 			if(e.getSource()==newuser){
+				Path folder = Paths.get("src");
+				if(!Files.exists(folder)){
+					try{
+						Files.createDirectories(folder);
+					}catch(Exception e2){
+					}
+				}
 				
 				frame.dispose();
 				registerFrame.start();

@@ -8,6 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,6 +75,7 @@ public class register {
 	
 	
 	public void start() {
+		
 		LinkedList<clients> tempList = new LinkedList();
     	tempList =serial.deserialize("src/clients.ser");
     	if(tempList==null){
